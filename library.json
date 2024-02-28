@@ -1,0 +1,12 @@
+{
+    "id": "{B052BC3B-2FED-FC68-7673-98584C248769}",
+    "name": "Mill Local API",
+    "author": "Stig Kristiansen",
+    "url": "",
+    "compatibility": {
+        "version": "6.4"
+    },
+    "version": "1.0",
+    "build": 0,
+    "date": 0
+}

@@ -1,0 +1,12 @@
+{
+    "id": "{1CB703E5-C008-DEFF-4671-BC83CC481B71}",
+    "name": "Heater",
+    "type": 3,
+    "vendor": "Mill",
+    "aliases": [],
+    "parentRequirements": [],
+    "childRequirements": [],
+    "implemented": [],
+    "prefix": "HEAT",
+    "url": ""
+}
