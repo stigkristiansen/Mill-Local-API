@@ -21,6 +21,7 @@ class ETemperatureType {
     const AlwaysHeating = 'AlwaysHeating';
 }
 
+
 class LocalAPI {
     use HttpRequest;
 
