@@ -14,7 +14,7 @@ class Heater extends IPSModule {
 		$this->RegisterPropertyString(Properties::IPADDRESS, '');
 		$this->RegisterPropertyString(Properties::CUSTOMNAME, '');
 		$this->RegisterPropertyString(Properties::NAME, '');
-		$this->RegisterPropertyString(Properties::USESSL, False);
+		$this->RegisterPropertyBoolean(Properties::USESSL, False);
 
 		$this->RegisterTimer(Timers::UPDATE . (string) $this->InstanceID, 0, 'IPS_RequestAction(' . (string)$this->InstanceID . ', "Update", 0);');
 
