@@ -57,7 +57,7 @@ class Heater extends IPSModule {
 		try {
 			$ipAddress = $this->ReadPropertyString(Properties::IPADDRESS);
 			If(strlen($ipAddress)>0 && strlen($this->ReadPropertyString(Properties::NAME))==0) {
-				$useSSL = $this->ReadPropertyString(Properties::USESSL);
+				$useSSL = $this->ReadPropertyBoolean(Properties::USESSL);
 
 				$this->SendDebug(__FUNCTION__, 'Trying to retrive the device information...', 0);
 				$this->SendDebug(__FUNCTION__, sprintf('The IP Address is %s', $ipAddress), 0);
