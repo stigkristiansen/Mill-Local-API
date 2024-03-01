@@ -22,15 +22,32 @@ class ETemperatureType {
 }
 
 
-class LocalAPI {
+class MillLocalAPI {
     use HttpRequest;
 
     private string $ipAddress;
     private bool $useSSL;
 
+    private $name;
+    private $customName;
+
     public function __construct(string $IpAddress, $UseSSL = False) {
         $this->ipAddress = $IpAddress;
         $this->useSSL = $UseSSL;
+
+        $device = self::GetStatus();
+        if($device!==false) {
+            $this->name = $$device->name;
+            $this->customName = $device->custom_name;
+        }
+    }
+
+    public function Name() {
+        return $this->name;
+    }
+
+    public function CustomName() {
+        return $this->customName;
     }
 
     public function GetStatus() {
