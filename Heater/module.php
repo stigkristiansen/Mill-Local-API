@@ -66,7 +66,7 @@ class Heater extends IPSModule {
 				$this->LogMessage("Creating object MillLocalAPI", KL_MESSAGE);
 				$device = new MillLocalAPI($ipAddress, $useSSL);
 				$this->LogMessage("Object created", KL_MESSAGE);
-				$this->LogMessage("Device Name is: " . $device->Name(), KL_MESSAGE);
+				$this->LogMessage("Device Name is: " . json_encode($device->Name()), KL_MESSAGE);
 				$name = $device->Name();
 				$customName = $device->CustomName();
 				
