@@ -23,10 +23,9 @@ trait HttpRequest {
                     } else if(isset($result->status)) {
                         throw new Exception(sprintf("%s returned: error %s:", $url, $result->status));
                     }
-                } else
-                    return False;
+                } 
 
-                throw new Exception(sprintf("%s returned invalid JSON. The returned value was %s", $url, $originalResult));
+                throw new Exception(sprintf("%s returned invalid JSON. The returned value was \"%s\"", $url, $originalResult));
             }
 		} else
 			throw new Exception(sprintf('Host %s is not responding', $this->ipAddress));
