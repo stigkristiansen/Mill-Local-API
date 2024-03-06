@@ -126,7 +126,7 @@ trait HttpRequest {
 		if($result!==false)
             return $result;
 		else
-		    throw new Exception(sprintf("%s failed.", $Url));
+            throw new Exception(sprintf("\"%s\" failed. The error was \"%s\"", $Url, curl_error($ch)));
 	}
 }
 

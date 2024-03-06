@@ -37,7 +37,7 @@ class MillLocalAPI {
 
         $device = self::GetStatus();
         if($device!==false) {
-            $this->name = $$device->name;
+            $this->name = $device->name;
             $this->customName = $device->custom_name;
         }
     }

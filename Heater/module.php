@@ -55,6 +55,7 @@ class Heater extends IPSModule {
 
 	private function SetDeviceProperties() {
 		try {
+			$this->LogMessage("Inside SetDeviceProperties", KL_MESSAGE);
 			$ipAddress = $this->ReadPropertyString(Properties::IPADDRESS);
 			If(strlen($ipAddress)>0 && strlen($this->ReadPropertyString(Properties::NAME))==0) {
 				$useSSL = $this->ReadPropertyBoolean(Properties::USESSL);
@@ -62,7 +63,10 @@ class Heater extends IPSModule {
 				$this->SendDebug(__FUNCTION__, 'Trying to retrive the device information...', 0);
 				$this->SendDebug(__FUNCTION__, sprintf('The IP Address is %s', $ipAddress), 0);
 				
+				$this->LogMessage("Creating object MillLocalAPI", KL_MESSAGE);
 				$device = new MillLocalAPI($ipAddress, $useSSL);
+				$this->LogMessage("Object created", KL_MESSAGE);
+				$this->LogMessage("Device Name is: " . $device->Name(), KL_MESSAGE);
 				$name = $device->Name();
 				$customName = $device->CustomName();
 				
