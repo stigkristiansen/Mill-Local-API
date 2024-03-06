@@ -16,6 +16,9 @@ class Heater extends IPSModule {
 		$this->RegisterPropertyString(Properties::NAME, '');
 		$this->RegisterPropertyBoolean(Properties::USESSL, False);
 
+		$this->RegisterVariableBoolean(Variables::POWER_IDENT, Variables::POWER_TEXT, '~Switch', 1);
+		$this->EnableAction(Variables::POWER_IDENT);
+
 		$this->RegisterTimer(Timers::UPDATE . (string) $this->InstanceID, 0, 'IPS_RequestAction(' . (string)$this->InstanceID . ', "Update", 0);');
 
 		$this->RegisterMessage(0, IPS_KERNELMESSAGE);
@@ -54,19 +57,18 @@ class Heater extends IPSModule {
      }
 
 	private function SetDeviceProperties() {
+		$this->SendDebug(__FUNCTION__, 'Entering function..', 0);
+
 		try {
-			$this->LogMessage("Inside SetDeviceProperties", KL_MESSAGE);
 			$ipAddress = $this->ReadPropertyString(Properties::IPADDRESS);
-			If(strlen($ipAddress)>0 && strlen($this->ReadPropertyString(Properties::NAME))==0) {
+			If(strlen($ipAddress)>0) {
 				$useSSL = $this->ReadPropertyBoolean(Properties::USESSL);
 
 				$this->SendDebug(__FUNCTION__, 'Trying to retrive the device information...', 0);
 				$this->SendDebug(__FUNCTION__, sprintf('The IP Address is %s', $ipAddress), 0);
 				
-				$this->LogMessage("Creating object MillLocalAPI", KL_MESSAGE);
 				$device = new MillLocalAPI($ipAddress, $useSSL);
-				$this->LogMessage("Object created: " . json_encode($device), KL_MESSAGE);
-				$this->LogMessage("Device Name is: " . json_encode($device->Name()), KL_MESSAGE);
+				
 				$name = $device->Name();
 				$customName = $device->CustomName();
 				
@@ -90,6 +92,34 @@ class Heater extends IPSModule {
 
 	private function SetTimers() {
 		$this->SetTimerInterval(Timers::UPDATE  . (string) $this->InstanceID, Timers::UPDATEINTERVAL);
+	}
+
+	public function RequestAction($Ident, $Value) {
+		$msg = sprintf('RequestAction was called: %s:%s', (string)$Ident, (string)$Value);
+		$this->SendDebug(__FUNCTION__, $msg, 0);
+		
+		try {
+			switch ($Ident) {
+				case Variables::POWER_IDENT:
+					$this->Power($Value);
+					return;
+				case 'Update':
+					$this->Update();
+					return;
+			}
+		} catch(Exception $e) {
+			$msg = sprintf(Errors::UNEXPECTED,  $e->getMessage());
+			$this->LogMessage($msg, KL_ERROR);
+			$this->SendDebug(__FUNCTION__, $msg, 0);
+		}
+	}
+
+	private function Power(bool $State) {
+
+	}
+
+	private function Update() {
+		$this->SetDeviceProperties();
 	}
 
 }

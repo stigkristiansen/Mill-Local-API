@@ -26,6 +26,8 @@ class Profiles {
 }
 
 class Variables {
+    POWER_IDENT = 'power';
+    POWER_TEXT = 'Power';
 }
 
 class ResponseCodes {
