@@ -4,6 +4,16 @@ declare(strict_types=1);
 
 require_once(__DIR__ . "/../libs/autoload.php");
 
+class OperationMode {
+	const OFF_ID = 'Off';
+	const OFF_TEXT = EOperationMode::Off;
+	const WEEKLYPROGRAM_ID = 'WeeklyProgram';
+	const WEEKLYPROGRAM_TEXT = EOperationMode::WeeklyProgram;
+	const INDEPENDENTDEVICE_ID = 'IndependentDevice';
+	const INDEPENDENTDEVICE_TEXT = EOperationMode::IndependentDevice;
+	const CONTROLINDIVIDUALLY_ID = 'ControlIndividually';
+	const CONTROLINDIVIDUALLY_TEXT = EOPerationMode::ControlIndividually;
+}
 
 class Heater extends IPSModule {
 	use Profile;
@@ -12,12 +22,7 @@ class Heater extends IPSModule {
 		//Never delete this line!
 		parent::Create();
 
-		$this->RegisterProfileIntegerEx(Profiles::OPMODE, Profiles::OPMODE_ICON, '', '', [
-			[OperationMode::OFF_ID, OperationMode::OFF_TEXT,  '', -1],
-			[OperationMode::WEEKLYPROGRAM_ID, OperationMode::WEEKLYPROGRAM_TEXT,  '', -1],
-			[OperationMode::INDEPENDENTDEVICE_ID, OperationMode::INDEPENDENTDEVICE_TEXT,  '', -1],
-			[OperationMode::CONTROLINDIVIDUALLY_ID, OperationMode::CONTROLINDIVIDUALLY_TEXT, '', -1]
-		]);
+
 
 		$this->RegisterPropertyString(Properties::IPADDRESS, '');
 		$this->RegisterPropertyString(Properties::CUSTOMNAME, '');
