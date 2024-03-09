@@ -4,12 +4,20 @@ declare(strict_types=1);
 
 require_once(__DIR__ . "/../libs/autoload.php");
 
+
 class Heater extends IPSModule {
 	use Profile;
 
 	public function Create() {
 		//Never delete this line!
 		parent::Create();
+
+		$this->RegisterProfileIntegerEx(Profiles::OPMODE, Profiles::OPMODE_ICON, '', '', [
+			[OperationMode::OFF_ID, OperationMode::OFF_TEXT,  '', -1],
+			[OperationMode::WEEKLYPROGRAM_ID, OperationMode::WEEKLYPROGRAM_TEXT,  '', -1],
+			[OperationMode::INDEPENDENTDEVICE_ID, OperationMode::INDEPENDENTDEVICE_TEXT,  '', -1],
+			[OperationMode::CONTROLINDIVIDUALLY_ID, OperationMode::CONTROLINDIVIDUALLY_TEXT, '', -1]
+		]);
 
 		$this->RegisterPropertyString(Properties::IPADDRESS, '');
 		$this->RegisterPropertyString(Properties::CUSTOMNAME, '');
@@ -19,6 +27,9 @@ class Heater extends IPSModule {
 		$this->RegisterVariableBoolean(Variables::POWER_IDENT, Variables::POWER_TEXT, '~Switch', 1);
 		$this->EnableAction(Variables::POWER_IDENT);
 
+		$this->RegisterVariableInteger(Variables::OPMODE_IDENT, Variables::OPMODE_TEXT, Profile::OPMODE, 2);
+		$this->EnableAction(Variables::OPMODE_IDENT);
+		
 		$this->RegisterTimer(Timers::UPDATE . (string) $this->InstanceID, 0, 'IPS_RequestAction(' . (string)$this->InstanceID . ', "Update", 0);');
 
 		$this->RegisterMessage(0, IPS_KERNELMESSAGE);
@@ -28,7 +39,7 @@ class Heater extends IPSModule {
 	public function Destroy() {
 		$module = json_decode(file_get_contents(__DIR__ . '/module.json'));
 		if(count(IPS_GetInstanceListByModuleID($module->id))==0) {
-			//$this->DeleteProfile(Profiles::CONTROL);
+			$this->DeleteProfile(Profiles::OPMODE);
 		}
 
 		//Never delete this line!
@@ -95,7 +106,7 @@ class Heater extends IPSModule {
 					$this->SendDebug(__FUNCTION__, sprintf('Device name: %s', $name), 0);
 
 					$customName = $device->CustomName();
-					$this->SendDebug(__FUNCTION__, sprintf('Device Custom Name:: %s', $customName), 0);
+					$this->SendDebug(__FUNCTION__, sprintf('Device Custom Name: %s', $customName), 0);
 
 					$this->SendDebug(__FUNCTION__, sprintf('Updating form...', $name), 0);
 					

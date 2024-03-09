@@ -30,6 +30,7 @@ class MillLocalAPI {
 
     private $name;
     private $customName;
+    private $operationMode;
 
     public function __construct(string $IpAddress, $UseSSL = False) {
         $this->ipAddress = $IpAddress;
@@ -40,6 +41,11 @@ class MillLocalAPI {
             $this->name = $device->name;
             $this->customName = $device->custom_name;
         }
+
+        $mode = self::GetOperationMode();
+        if($mode!==false) {
+            $this->OperationMode = $mode->mode;
+        }
     }
 
     public function Name() {
@@ -48,6 +54,10 @@ class MillLocalAPI {
 
     public function CustomName() {
         return $this->customName;
+    }
+
+    public function OperationMode() {
+        return $this->OperationMode;
     }
 
     public function GetStatus() {
