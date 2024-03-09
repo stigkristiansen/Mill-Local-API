@@ -58,14 +58,5 @@ class ETemperatureType {
 }
 
 
-class OperationMode {
-	const OFF_ID = 'Off';
-	const OFF_TEXT = EOperationMode::Off;
-	const WEEKLYPROGRAM_ID = 'WeeklyProgram';
-	const WEEKLYPROGRAM_TEXT = EOperationMode::WeeklyProgram;
-	const INDEPENDENTDEVICE_ID = 'IndependentDevice';
-	const INDEPENDENTDEVICE_TEXT = EOperationMode::IndependentDevice;
-	const CONTROLINDIVIDUALLY_ID = 'ControlIndividually';
-	const CONTROLINDIVIDUALLY_TEXT = EOPerationMode::ControlIndividually;
-}
+
 

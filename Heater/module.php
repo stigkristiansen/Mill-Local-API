@@ -22,7 +22,7 @@ class Heater extends IPSModule {
 		//Never delete this line!
 		parent::Create();
 
-
+		
 
 		$this->RegisterPropertyString(Properties::IPADDRESS, '');
 		$this->RegisterPropertyString(Properties::CUSTOMNAME, '');
