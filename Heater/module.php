@@ -170,7 +170,7 @@ class Heater extends IPSModule {
 				$operationMode = self::MapOperationModeToInt($device->OperationMode());
 						
 				if($operationMode>0) {
-					$this->SendDebug(__FUNCTION__, sprintf('Operation Mode: %s', $$device->OperationMode()), 0);
+					$this->SendDebug(__FUNCTION__, sprintf('Operation Mode: %s', $device->OperationMode()), 0);
 					$this->SetValueEx(Variables::OPMODE_IDENT, $operationMode);
 				} else {
 					$this->SendDebug(__FUNCTION__, sprintf('Failed to retrive device information from %s', $ipAddress), 0);
