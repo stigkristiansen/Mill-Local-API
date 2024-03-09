@@ -8,6 +8,7 @@ require_once(__DIR__ . "/../libs/autoload.php");
 
 class Heater extends IPSModule {
 	use Profile;
+	Use Utils;
 
 	public function Create() {
 		//Never delete this line!
@@ -88,6 +89,21 @@ class Heater extends IPSModule {
 		}
 	}
 
+	private function MapOperationModeToInt(string $OperationMode) {
+		switch ($OperationMode) {
+			case EPoerationMode::Off:
+				return 1;
+			case EPoerationMode::WeeklyProgram:
+				return 2;
+			case EPoerationMode::IndependentDevice:
+				return 3;
+			case EPoerationMode::ControlIndividually:
+				return 4;
+			default:
+				return 0;
+		}
+	}
+
 	private function SetDeviceProperties() {
 		$this->SendDebug(__FUNCTION__, 'Entering function..', 0);
 
@@ -141,6 +157,31 @@ class Heater extends IPSModule {
 	}
 
 	private function UpdateVariables() {
+		try {
+			$ipAddress = $this->ReadPropertyString(Properties::IPADDRESS);
+			If(strlen($ipAddress)>0) {
+				$useSSL = $this->ReadPropertyBoolean(Properties::USESSL);
+
+				$this->SendDebug(__FUNCTION__, 'Trying to retrive the device information...', 0);
+				$this->SendDebug(__FUNCTION__, sprintf('The IP Address is %s', $ipAddress), 0);
+				
+				$device = new MillLocalAPI($ipAddress, $useSSL);
+				
+				$operationMode = self::MapOperationModeToInt($device->OperationMode());
+						
+				if($operationMode>0) {
+					$this->SendDebug(__FUNCTION__, sprintf('Operation Mode: %s', $$device->OperationMode()), 0);
+					$this->SetValueEx(Variables::OPMODE_IDENT, $operationMode);
+				} else {
+					$this->SendDebug(__FUNCTION__, sprintf('Failed to retrive device information from %s', $ipAddress), 0);
+				}
+			
+			}
+		} catch(Exception $e) {
+			$msg = sprintf(Errors::UNEXPECTED, $e->getMessage());
+			$this->LogMessage($msg, KL_ERROR);
+			$this->SendDebug(__FUNCTION__, $msg, 0);
+		} 
 
 	}
 
