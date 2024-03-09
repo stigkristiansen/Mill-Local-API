@@ -40,9 +40,27 @@ class ResponseCodes {
     }
 }
 
+class EOperationMode {
+    const Off = 'Off';
+    const WeeklyProgram = 'Weekly program';
+    const IndependentDevice = 'Independent device';
+    const ControlIndividually = 'Control individually';
+    const Invalid = 'Invalid';
+}
+
+class ETemperatureType {
+    const Off = 'Off';
+    const Normal = 'Normal';
+    const Comfort = 'Comfort';
+    const Sleep = 'Sleep';
+    const Away = 'Away';
+    const AlwaysHeating = 'AlwaysHeating';
+}
+
+
 class OperationMode {
 	const OFF_ID = 'Off';
-	const OFF_TEXT = EOpertionMode::Off;
+	const OFF_TEXT = EOperationMode::Off;
 	const WEEKLYPROGRAM_ID = 'WeeklyProgram';
 	const WEEKLYPROGRAM_TEXT = EOperationMode::WeeklyProgram;
 	const INDEPENDENTDEVICE_ID = 'IndependentDevice';
