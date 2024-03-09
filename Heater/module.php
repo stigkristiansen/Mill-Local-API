@@ -91,13 +91,13 @@ class Heater extends IPSModule {
 
 	private function MapOperationModeToInt(string $OperationMode) {
 		switch ($OperationMode) {
-			case EPoerationMode::Off:
+			case EOperationMode::Off:
 				return 1;
-			case EPoerationMode::WeeklyProgram:
+			case EOperationMode::WeeklyProgram:
 				return 2;
-			case EPoerationMode::IndependentDevice:
+			case EOperationMode::IndependentDevice:
 				return 3;
-			case EPoerationMode::ControlIndividually:
+			case EOperationMode::ControlIndividually:
 				return 4;
 			default:
 				return 0;
