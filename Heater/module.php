@@ -99,8 +99,8 @@ class Heater extends IPSModule {
 
 					$this->SendDebug(__FUNCTION__, sprintf('Updating form...', $name), 0);
 					
-					$orgName = $this-ReadPropertyString(Properties::NAME);
-					$orgCustomName = $this-ReadPropertyString(Properties::CUSTOMNAME);
+					$orgName = $this->ReadPropertyString(Properties::NAME);
+					$orgCustomName = $this->ReadPropertyString(Properties::CUSTOMNAME);
 
 					$apply =false;
 					if($name!=$orgName) {
