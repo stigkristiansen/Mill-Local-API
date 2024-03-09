@@ -90,8 +90,35 @@ class Heater extends IPSModule {
 				$device = new MillLocalAPI($ipAddress, $useSSL);
 				
 				$name = $device->Name();
-				$this->SendDebug(__FUNCTION__, sprintf('Device name: %s', $name), 0);
-								
+						
+				if(strlen($name)>0) {
+					$this->SendDebug(__FUNCTION__, sprintf('Device name: %s', $name), 0);
+
+					$customName = $device->CustomName();
+					$this->SendDebug(__FUNCTION__, sprintf('Device Custom Name:: %s', $customName), 0);
+
+					$this->SendDebug(__FUNCTION__, sprintf('Updating form...', $name), 0);
+					
+					$orgName = $this-ReadPropertyString(Properties::NAME);
+					$orgCustomName = $this-ReadPropertyString(Properties::CUSTOMNAME);
+
+					$apply =false;
+					if($name!=$orgName) {
+						IPS_SetProperty($this->InstanceID, Properties::NAME, $name);
+						$apply = true;
+					}
+
+					if($customName!=$orgCustomName) {
+						IPS_SetProperty($this->InstanceID, Properties::CUSTOMNAME, $customName);
+						$apply = true;
+					}
+						
+					if($apply)
+						IPS_ApplyChanges($this->InstanceID);
+
+				} else {
+					$this->SendDebug(__FUNCTION__, sprintf('Failed to retrive device information! %s', $name), 0);
+				}
 			
 			}
 		} catch(Exception $e) {
@@ -115,7 +142,7 @@ class Heater extends IPSModule {
 
 	private function Update() {
 		$this->SetDeviceProperties();
-		$this->UpdateVariables()
+		$this->UpdateVariables();
 	}
 
 }
