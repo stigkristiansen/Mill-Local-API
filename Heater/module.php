@@ -56,45 +56,7 @@ class Heater extends IPSModule {
 		}
      }
 
-	private function SetDeviceProperties() {
-		$this->SendDebug(__FUNCTION__, 'Entering function..', 0);
-
-		try {
-			$ipAddress = $this->ReadPropertyString(Properties::IPADDRESS);
-			If(strlen($ipAddress)>0) {
-				$useSSL = $this->ReadPropertyBoolean(Properties::USESSL);
-
-				$this->SendDebug(__FUNCTION__, 'Trying to retrive the device information...', 0);
-				$this->SendDebug(__FUNCTION__, sprintf('The IP Address is %s', $ipAddress), 0);
-				
-				$device = new MillLocalAPI($ipAddress, $useSSL);
-				
-				$name = $device->Name();
-				$customName = $device->CustomName();
-				
-				if(strlen($name)>0) {
-					$this->SendDebug(__FUNCTION__, sprintf('Updating form...', $name), 0);
-					
-					IPS_SetProperty($this->InstanceID, Properties::NAME, $name);
-					IPS_SetProperty($this->InstanceID, Properties::CUSTOMNAME, $customName);
-					
-					IPS_ApplyChanges($this->InstanceID);
-				} else {
-					$this->SendDebug(__FUNCTION__, sprintf('Failed to retrive device information!', $name), 0);
-				}
-			}
-		} catch(Exception $e) {
-			$msg = sprintf(Errors::UNEXPECTED, $e->getMessage());
-			$this->LogMessage($msg, KL_ERROR);
-			$this->SendDebug(__FUNCTION__, $msg, 0);
-		} 
-	}
-
-	private function SetTimers() {
-		$this->SetTimerInterval(Timers::UPDATE  . (string) $this->InstanceID, Timers::UPDATEINTERVAL);
-	}
-
-	public function RequestAction($Ident, $Value) {
+	 public function RequestAction($Ident, $Value) {
 		$msg = sprintf('RequestAction was called: %s:%s', (string)$Ident, (string)$Value);
 		$this->SendDebug(__FUNCTION__, $msg, 0);
 		
@@ -114,12 +76,71 @@ class Heater extends IPSModule {
 		}
 	}
 
+	private function SetDeviceProperties() {
+		$this->SendDebug(__FUNCTION__, 'Entering function..', 0);
+
+		try {
+			$ipAddress = $this->ReadPropertyString(Properties::IPADDRESS);
+			If(strlen($ipAddress)>0) {
+				$useSSL = $this->ReadPropertyBoolean(Properties::USESSL);
+
+				$this->SendDebug(__FUNCTION__, 'Trying to retrive the device information...', 0);
+				$this->SendDebug(__FUNCTION__, sprintf('The IP Address is %s', $ipAddress), 0);
+				
+				$device = new MillLocalAPI($ipAddress, $useSSL);
+				
+				$name = $device->Name();
+				$this->SendDebug(__FUNCTION__, sprintf('Device name: %s', $name), 0);
+								
+				if(strlen($name)>0) {
+					$customName = $device->CustomName();
+					$this->SendDebug(__FUNCTION__, sprintf('Device Custom Name:: %s', $customName), 0);
+
+					$this->SendDebug(__FUNCTION__, sprintf('Updating form...', $name), 0);
+					
+					$orgName = $this-ReadPropertyString(Properties::NAME);
+					$orgCustomName = $this-ReadPropertyString(Properties::CUSTOMNAME);
+
+					$apply =false;
+					if($name!=$orgName) {
+						IPS_SetProperty($this->InstanceID, Properties::NAME, $name);
+						$apply = true;
+					}
+
+					if($customName!=$orgCustomName) {
+						IPS_SetProperty($this->InstanceID, Properties::CUSTOMNAME, $customName);
+						$apply = true;
+					}
+						
+					if($apply)
+						IPS_ApplyChanges($this->InstanceID);
+
+				} else {
+					$this->SendDebug(__FUNCTION__, sprintf('Failed to retrive device information!', $name), 0);
+				}
+			}
+		} catch(Exception $e) {
+			$msg = sprintf(Errors::UNEXPECTED, $e->getMessage());
+			$this->LogMessage($msg, KL_ERROR);
+			$this->SendDebug(__FUNCTION__, $msg, 0);
+		} 
+	}
+
+	private function UpdateVariables() {
+
+	}
+
+	private function SetTimers() {
+		$this->SetTimerInterval(Timers::UPDATE  . (string) $this->InstanceID, Timers::UPDATEINTERVAL);
+	}
+
 	private function Power(bool $State) {
 
 	}
 
 	private function Update() {
 		$this->SetDeviceProperties();
+		$this->UpdateVariables()
 	}
 
 }
