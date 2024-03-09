@@ -57,6 +57,14 @@ class ETemperatureType {
     const AlwaysHeating = 'AlwaysHeating';
 }
 
-
-
+class OperationMode {
+	const OFF_ID = 1;
+	const OFF_TEXT = EOperationMode::Off;
+	const WEEKLYPROGRAM_ID = 2;
+	const WEEKLYPROGRAM_TEXT = EOperationMode::WeeklyProgram;
+	const INDEPENDENTDEVICE_ID = 3;
+	const INDEPENDENTDEVICE_TEXT = EOperationMode::IndependentDevice;
+	const CONTROLINDIVIDUALLY_ID = 4;
+	const CONTROLINDIVIDUALLY_TEXT = EOPerationMode::ControlIndividually;
+}
 

@@ -4,16 +4,7 @@ declare(strict_types=1);
 
 require_once(__DIR__ . "/../libs/autoload.php");
 
-class OperationMode {
-	const OFF_ID = 'Off';
-	const OFF_TEXT = EOperationMode::Off;
-	const WEEKLYPROGRAM_ID = 'WeeklyProgram';
-	const WEEKLYPROGRAM_TEXT = EOperationMode::WeeklyProgram;
-	const INDEPENDENTDEVICE_ID = 'IndependentDevice';
-	const INDEPENDENTDEVICE_TEXT = EOperationMode::IndependentDevice;
-	const CONTROLINDIVIDUALLY_ID = 'ControlIndividually';
-	const CONTROLINDIVIDUALLY_TEXT = EOPerationMode::ControlIndividually;
-}
+
 
 class Heater extends IPSModule {
 	use Profile;
@@ -37,7 +28,7 @@ class Heater extends IPSModule {
 		$this->RegisterVariableBoolean(Variables::POWER_IDENT, Variables::POWER_TEXT, '~Switch', 1);
 		$this->EnableAction(Variables::POWER_IDENT);
 
-		$this->RegisterVariableInteger(Variables::OPMODE_IDENT, Variables::OPMODE_TEXT, Profile::OPMODE, 2);
+		$this->RegisterVariableInteger(Variables::OPMODE_IDENT, Variables::OPMODE_TEXT, Profiles::OPMODE, 2);
 		$this->EnableAction(Variables::OPMODE_IDENT);
 		
 		$this->RegisterTimer(Timers::UPDATE . (string) $this->InstanceID, 0, 'IPS_RequestAction(' . (string)$this->InstanceID . ', "Update", 0);');
