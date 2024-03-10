@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 require_once(__DIR__ . "/../libs/autoload.php");
 
-
-
 class Heater extends IPSModule {
 	use Profile;
 	Use Utils;
@@ -69,7 +67,7 @@ class Heater extends IPSModule {
 		}
      }
 
-	 public function RequestAction($Ident, $Value) {
+	public function RequestAction($Ident, $Value) {
 		$msg = sprintf('RequestAction was called: %s:%s', (string)$Ident, (string)$Value);
 		$this->SendDebug(__FUNCTION__, $msg, 0);
 		
@@ -77,6 +75,9 @@ class Heater extends IPSModule {
 			switch ($Ident) {
 				case Variables::POWER_IDENT:
 					$this->Power($Value);
+					return;
+				case Variables::OPMODE_IDENT:
+					$this->OperationMode($Value);
 					return;
 				case 'Update':
 					$this->Update();
@@ -101,6 +102,21 @@ class Heater extends IPSModule {
 				return 4;
 			default:
 				return 0;
+		}
+	}
+
+	private function MapOperationModeToString(int $OperationMode) {
+		switch ($OperationMode) {
+			case 1:
+				return EOperationMode::Off;
+			case 2:
+				return EOperationMode::WeeklyProgram;
+			case 3:
+				return EOperationMode::IndependentDevice;
+			case 4:
+				return EOperationMode::ControlIndividually;
+			default:
+				return false;
 		}
 	}
 
@@ -190,6 +206,39 @@ class Heater extends IPSModule {
 	}
 
 	private function Power(bool $State) {
+		if($State) {
+
+		} else {
+			$this->SetOperationMode(OperationMode::OFF_ID);
+		}
+	}
+
+	private function SetOperationMode($Mode) {
+		try {
+			$ipAddress = $this->ReadPropertyString(Properties::IPADDRESS);
+			If(strlen($ipAddress)>0) {
+				$useSSL = $this->ReadPropertyBoolean(Properties::USESSL);
+
+				$this->SendDebug(__FUNCTION__, 'Trying to set operation mode...', 0);
+				$this->SendDebug(__FUNCTION__, sprintf('The IP Address is %s', $ipAddress), 0);
+				
+				$device = new MillLocalAPI($ipAddress, $useSSL);
+				
+				$operationMode = self::MapOperationModeToString($Mode);
+						
+				if($operationMode!==false) {
+					$this->SendDebug(__FUNCTION__, sprintf('Selected Operation Mode: %s', $operationMode), 0);
+					$device->SetOperationMode($operationMode);
+					$this->SetValue(Variables::OPMODE_IDENT, $Mode);
+				} else {
+					$this->SendDebug(__FUNCTION__, sprintf('Failed to set operation mode for %s. The mode was %d', $ipAddress, $Mode), 0);
+				}
+			}
+		} catch(Exception $e) {
+			$msg = sprintf(Errors::UNEXPECTED, $e->getMessage());
+			$this->LogMessage($msg, KL_ERROR);
+			$this->SendDebug(__FUNCTION__, $msg, 0);
+		} 
 
 	}
 
