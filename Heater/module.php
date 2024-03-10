@@ -77,7 +77,7 @@ class Heater extends IPSModule {
 					$this->Power($Value);
 					return;
 				case Variables::OPMODE_IDENT:
-					$this->OperationMode($Value);
+					$this->SetOperationMode($Value);
 					return;
 				case 'Update':
 					$this->Update();
