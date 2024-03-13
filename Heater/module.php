@@ -284,7 +284,6 @@ class Heater extends IPSModule {
 	}
 
 	private function Update() {
-		$this->SendDebug(__FUNCTION__, 'Entering function..', 0);
 		$this->SetDeviceProperties();
 		$this->UpdateVariables();
 	}
