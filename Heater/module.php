@@ -180,6 +180,8 @@ class Heater extends IPSModule {
 	}
 
 	private function UpdateVariables() {
+		$this->SendDebug(__FUNCTION__, 'Entering function..', 0);
+
 		try {
 			$ipAddress = $this->ReadPropertyString(Properties::IPADDRESS);
 			If(strlen($ipAddress)>0) {
@@ -216,6 +218,7 @@ class Heater extends IPSModule {
 	}
 
 	private function Power(bool $State) {
+		$this->SendDebug(__FUNCTION__, 'Entering function..', 0);
 		if($State) {
 			$this->SetOperationMode($this->GetValue(Variables::OPMODE_IDENT));
 			$this->EnableAction(Variable::OPMODE_IDENT);
@@ -228,6 +231,7 @@ class Heater extends IPSModule {
 	}
 
 	private function SetOperationMode(int $Mode) {
+		$this->SendDebug(__FUNCTION__, 'Entering function..', 0);
 		try {
 			$ipAddress = $this->ReadPropertyString(Properties::IPADDRESS);
 			If(strlen($ipAddress)>0) {
@@ -257,6 +261,7 @@ class Heater extends IPSModule {
 	}
 
 	private function SetSetpoint(float $Temperature) {
+		$this->SendDebug(__FUNCTION__, 'Entering function..', 0);
 		try {
 			$ipAddress = $this->ReadPropertyString(Properties::IPADDRESS);
 			If(strlen($ipAddress)>0) {
@@ -279,6 +284,7 @@ class Heater extends IPSModule {
 	}
 
 	private function Update() {
+		$this->SendDebug(__FUNCTION__, 'Entering function..', 0);
 		$this->SetDeviceProperties();
 		$this->UpdateVariables();
 	}
