@@ -33,6 +33,10 @@ class Variables {
     const POWER_TEXT = 'Power';
     const OPMODE_IDENT = 'opmode';
     const OPMODE_TEXT = 'Mode';
+    const SETPOINT_IDENT = 'setpoint';
+    const SETPOINT_TEXT = 'Setpoint';
+    const TEMP_IDENT = 'temperature';
+    const TEMP_TEXT = 'Temperature';
 }
 
 class ResponseCodes {
