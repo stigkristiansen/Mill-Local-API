@@ -204,7 +204,7 @@ class Heater extends IPSModule {
 		$this->SetTimerInterval(Timers::UPDATE  . (string) $this->InstanceID, Timers::UPDATEINTERVAL);
 	}
 
-	private function Power(bool $State) {
+	public function Power(bool $State) {
 		$this->SendDebug(__FUNCTION__, Debug::ENTERINGFUNCTION, 0);
 
 		$this->SetValueEx(Variables::POWER_IDENT, $State);
@@ -224,7 +224,7 @@ class Heater extends IPSModule {
 		}
 	}
 
-	private function SetOperationMode(int $Mode) {
+	public function SetOperationMode(int $Mode) {
 		$this->SendDebug(__FUNCTION__, Debug::ENTERINGFUNCTION, 0);
 
 		try {
@@ -257,7 +257,7 @@ class Heater extends IPSModule {
 
 	}
 
-	private function SetSetpoint(float $Temperature) {
+	public function SetSetpoint(float $Temperature) {
 		$this->SendDebug(__FUNCTION__, Debug::ENTERINGFUNCTION, 0);
 
 		try {
