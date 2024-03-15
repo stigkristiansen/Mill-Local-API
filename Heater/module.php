@@ -96,9 +96,6 @@ class Heater extends IPSModule {
 			$this->SendDebug(__FUNCTION__, $msg, 0);
 		}
 	}
- 
-
-	
 
 	private function SetDeviceProperties() {
 		$this->SendDebug(__FUNCTION__, Debug::ENTERINGFUNCTION, 0);
@@ -290,5 +287,4 @@ class Heater extends IPSModule {
 		$this->SetDeviceProperties();
 		$this->UpdateVariables();
 	}
-
 }
