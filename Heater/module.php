@@ -197,7 +197,7 @@ class Heater extends IPSModule {
 					$this->SendDebug(__FUNCTION__, sprintf('Operation Mode: %s(%d)', $device->OperationMode(), $operationMode), 0);
 					$this->SetValueEx(Variables::OPMODE_IDENT, $operationMode);
 
-					if($operationMode!=OperationMode::OFF_ID) {
+					if($operationMode==OperationMode::OFF_ID) {
 						$this->SetValueEx(Variables::POWER_IDENT, false);
 						$this->DisableAction(Variables::OPMODE_IDENT);
 						$this->DisableAction(Variables::SETPOINT_IDENT);
