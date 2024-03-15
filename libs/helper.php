@@ -37,6 +37,8 @@ class Variables {
     const SETPOINT_TEXT = 'Setpoint';
     const TEMP_IDENT = 'temperature';
     const TEMP_TEXT = 'Temperature';
+    const HUMIDITY_IDENT = 'humidity';
+    const HUMIDITY_TEXT = 'Humidity';
 }
 
 class ResponseCodes {

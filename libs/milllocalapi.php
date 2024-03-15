@@ -26,17 +26,12 @@ class MillLocalAPI {
             $this->name = $device->name;
             $this->customName = $device->custom_name;
         }
-
-        /*$mode = self::GetOperationMode();
-        if($mode!==false) {
-            $this->operationMode = $mode->mode;
-        }*/
-
+        
         $status = self::GetControlStatus();
         if($status!==false) {
             $this->temperature = round($status->ambient_temperature,1);
             $this->setpoint = $status->set_temperature;
-            $this->humidity = $status->humidity;
+            $this->humidity = round($status->humidity,1);
             $this->operationMode = $status->operation_mode;
         }
     }

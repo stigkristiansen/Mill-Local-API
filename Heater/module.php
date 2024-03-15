@@ -32,6 +32,8 @@ class Heater extends IPSModule {
 
 		$this->RegisterVariableFloat(Variables::TEMP_IDENT, Variables::TEMP_TEXT, '~Temperature');
 
+		$this->RegisterVariableFloat(Variables::HUMIDITY_IDENT, Variables::HUMIDITY_TEXT, '~Humidity.F');
+
 		$this->RegisterVariableFloat(Variables::SETPOINT_IDENT, Variables::SETPOINT_TEXT, '~Temperature.Room');
 		$this->EnableAction(Variables::SETPOINT_IDENT);
 		
@@ -203,6 +205,7 @@ class Heater extends IPSModule {
 
 				$this->SetValueEx(Variables::TEMP_IDENT, $device->Temperature());
 				$this->SetValueEx(Variables::SETPOINT_IDENT, $device->Setpoint());
+				$this->SetValueEx(Variables::HUMIDITY_IDENT, $device->Humidity());
 			
 			}
 		} catch(Exception $e) {
