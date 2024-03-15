@@ -7,11 +7,11 @@ trait HttpRequest {
         return $this->useSSL?'https://':'http://';
     }
 
-    protected function HttpGet(string $DeltaUrl, bool $ReturnResult=True) {
+    protected function HttpGet(string $DeltaUrl, bool $ReturnResult=True) string {
 		if(self::Ping($this->ipAddress)) {
             $url = $this->GetScheme() . $this->ipAddress . $DeltaUrl;
 
-			$result = self::request ('get', $url);
+			$result = self::Request ('get', $url);
             
             if($ReturnResult) {
                 $originalResult = $result;
@@ -31,11 +31,11 @@ trait HttpRequest {
 			throw new Exception(sprintf('Host %s is not responding', $this->ipAddress));
     }
 
-    protected function HttpPost(string $DeltaUrl, bool $ReturnResult=True) {
+    protected function HttpPost(string $DeltaUrl, bool $ReturnResult=True) : string {
         if(self::Ping($this->ipAddress)) {
 			$url = $this->GetScheme() . $this->ipAddress . $DeltaUrl;
 
-			$result = self::request('post', $url);
+			$result = self::Request('post', $url);
 
             if($ReturnResult) {
                 $originalResult = $result;
@@ -47,8 +47,7 @@ trait HttpRequest {
                     } else if(isset($result->status)) {
                         throw new Exception(sprintf("%s returned: error %s:", $url, $result->status));
                     }
-                } else
-                    return False;
+                } 
 
                 throw new Exception(sprintf("%s returned invalid JSON. The returned value was %s", $url, $originalResult));
             }
@@ -57,11 +56,11 @@ trait HttpRequest {
     }
 
     
-    protected function HttpPostJson(string $DeltaUrl, string $JsonParams, bool $ReturnResult=True) {
+    protected function HttpPostJson(string $DeltaUrl, string $JsonParams, bool $ReturnResult=True) : string {
 	    if(self::Ping($this->ipAddress)) {
             $url = $this->GetScheme() . $this->ipAddress . $DeltaUrl;
 
-			$result = self::request('post', $url, $JsonParams);
+			$result = self::Request('post', $url, $JsonParams);
 
             if($ReturnResult) {
                 $originalResult = $result;
@@ -73,8 +72,7 @@ trait HttpRequest {
                     } else if(isset($result->status)) {
                         throw new Exception(sprintf("%s returned: error %s:", $url, $result->status));
                     }
-                } else
-                    return False;
+                } 
 
                 throw new Exception(sprintf("%s returned invalid JSON. The returned value was %s", $url, $originalResult));
             }
@@ -82,7 +80,7 @@ trait HttpRequest {
 			throw new Exception(sprintf('Host %s is not responding', $this->ipAddress));	
     }
 
-    protected function Ping(string $IpAddress) {
+    protected function Ping(string $IpAddress) : bool {
         $wait = 500;
         for($count=0;$count<3;$count++) {
             if(Sys_Ping($IpAddress, $wait))
@@ -93,7 +91,7 @@ trait HttpRequest {
         return false;
     }
 
-    protected function request($Type, $Url, $Data=NULL) {
+    protected function Request($Type, $Url, $Data=NULL) : string | bool {
 		$ch = curl_init();
 		
 		switch(strtolower($Type)) {
@@ -262,46 +260,6 @@ trait Profile {
                 IPS_SetVariableProfileAssociation($Name, $profileAssociation['Value'], '', '', -1);    
         }
     }
-
-    protected function CreateProfileAssosiationList($List) {
-        $count = 0;
-        foreach($List as $value) {
-            $assosiations[] = [$count, $value,  '', -1];
-            $count++;
-        }
-
-        return $assosiations;
-    }
-
-    protected function CreateProfileAssosiationLinkList($List) {
-        $assosiations[] = [0, 'None',  '', -1];
-
-        $instanceIds = IPS_GetInstanceListByModuleID('{5B66102A-96ED-DF96-0B89-54E37501F997}');
-        foreach($List as $value) {
-            foreach($instanceIds as $instanceId) {
-                if(strtolower(IPS_GetProperty($instanceId, Properties::NAME))==strtolower($value)) {
-                    $assosiations[] = [$instanceId, $value,  '', -1];
-                    break;        
-                }
-            }
-        }
-
-        return $assosiations;
-    }
-
-    protected function GetProfileAssosiationName($ProfileName, $Index) {
-        $profile = IPS_GetVariableProfile($ProfileName);
-    
-        if($profile!==false) {
-            foreach($profile['Associations'] as $association) {
-                if($association['Value']==$Index)
-                    return $association['Name'];
-            }
-        } 
-    
-        return false;
-    
-    }
 }
 
 trait Buffer {
@@ -325,24 +283,7 @@ trait Buffer {
 
 
 
-
 trait Utils {
-    protected function SecondsToString(float $Seconds, bool $ShowSeconds=true) {
-		if($Seconds>=0) {
-			$s = $Seconds%60;
-			$m = floor(($Seconds%3600)/60);
-			$h = floor(($Seconds%86400)/3600);
-			
-			if($ShowSeconds) {
-				return sprintf('%02d:%02d:%02d', $h, $m, $s);
-			} else {
-				return sprintf('%02d:%02d', $h, $m);
-			}
-		} else {
-			return 'N/A';
-		}
-	}
-
     protected function SetValueEx(string $Ident, $Value) {
 		$oldValue = $this->GetValue($Ident);
 		if($oldValue!=$Value)
