@@ -7,7 +7,7 @@ trait HttpRequest {
         return $this->useSSL?'https://':'http://';
     }
 
-    protected function HttpGet(string $DeltaUrl, bool $ReturnResult=True) string {
+    protected function HttpGet(string $DeltaUrl, bool $ReturnResult=True) : string {
 		if(self::Ping($this->ipAddress)) {
             $url = $this->GetScheme() . $this->ipAddress . $DeltaUrl;
 
