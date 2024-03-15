@@ -238,7 +238,7 @@ class Heater extends IPSModule {
 	private function Power(bool $State) {
 		$this->SendDebug(__FUNCTION__, 'Entering function..', 0);
 		if($State) {
-			$operationMode = $this->GetValue(Variables::OPMODE_IDENT)
+			$operationMode = $this->GetValue(Variables::OPMODE_IDENT);
 			$this->SetOperationMode($operationMode);
 			$this->EnableAction(Variable::OPMODE_IDENT);
 			
