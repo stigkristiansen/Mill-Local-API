@@ -28,12 +28,13 @@ class MillLocalAPI {
 
         $mode = self::GetOperationMode();
         if($mode!==false) {
-            $this->OperationMode = $mode->mode;
+            $this->operationMode = $mode->mode;
         }
 
         $status = self::GetControlStatus();
         if($status!==false) {
-            $this->temerature = $status->ambient_temperature;
+            IPS_LogMessage('Mill'. 'Got ControlStatus');
+            $this->temperature = $status->ambient_temperature;
             $this->setpoint = $status->set_temperature;
         }
     }
