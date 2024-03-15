@@ -16,14 +16,14 @@ class Debug {
     const UPDATINGFORM = 'Updating form...';
     const DEVICEINFOFAILED = 'Failed to retrive device information! %s';
     const OPERATIONMODE = 'Operation Mode: %s (%d)';
-    const TEMPERATURE = 'Tempearature is: %f';
-    const SETPOINT = 'Setpoint is: %f';
-    const HUMIDITY = 'Humidity is: %f';
+    const TEMPERATURE = 'Tempearature is: %.1f';
+    const SETPOINT = 'Setpoint is: %.1f';
+    const HUMIDITY = 'Humidity is: %.1f';
     const SETOPERATIONMODE = 'Trying to set operation mode...';
     const SELECTEDOPERATIONMODE = 'Selected Operation Mode: %s';
     const OPERATIONMODEFAILED = 'Failed to set operation mode for %s. The mode was %d';
     const ADJUSTSETPOINT = 'Trying to adjust the setpoint...';
-    const NEWSETPOINT = 'New setpoint is: %f';
+    const NEWSETPOINT = 'New setpoint is: %.1f';
 }
 
 
