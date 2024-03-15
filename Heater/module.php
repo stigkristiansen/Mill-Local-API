@@ -199,7 +199,7 @@ class Heater extends IPSModule {
 
 					if($operationMode!=OperationMode::OFF_ID) {
 						$this->SetValueEx(Variables::POWER_IDENT, false);
-						$this->DisableAction(Variables|::OPMODE_IDENT);
+						$this->DisableAction(Variables::OPMODE_IDENT);
 						$this->DisableAction(Variables::SETPOINT_IDENT);
 					} else {
 						$this->SetValueEx(Variables::POWER_IDENT, true);
