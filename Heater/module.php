@@ -269,7 +269,9 @@ class Heater extends IPSModule {
 				if($operationMode!==false) {
 					$device->SetOperationMode($operationMode);
 					$this->SendDebug(__FUNCTION__, sprintf('Selected Operation Mode: %s', $operationMode), 0);
-					$this->SetValueEx(Variables::OPMODE_IDENT, $Mode);
+					if($Mode!=OperationMode::OFF_ID) {
+						$this->SetValueEx(Variables::OPMODE_IDENT, $Mode);
+					}
 				} else {
 					$this->SendDebug(__FUNCTION__, sprintf('Failed to set operation mode for %s. The mode was %d', $ipAddress, $Mode), 0);
 				}
