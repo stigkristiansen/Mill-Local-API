@@ -59,8 +59,7 @@ class Heater extends IPSModule {
 
 		if (IPS_GetKernelRunlevel() == KR_READY) {
             $this->SetTimers();
-			
-			$this->SetDeviceProperties();
+			$this->Update();
         }
 	}
 
@@ -68,9 +67,8 @@ class Heater extends IPSModule {
         parent::MessageSink($TimeStamp, $SenderID, $Message, $Data);
 
         if ($Message == IPS_KERNELMESSAGE && $Data[0] == KR_READY) {
-			$this->SetDeviceProperties();
-			
 			$this->SetTimers();
+			$this->Update();
 		}
      }
 
@@ -187,11 +185,10 @@ class Heater extends IPSModule {
 		try {
 			$ipAddress = $this->ReadPropertyString(Properties::IPADDRESS);
 			If(strlen($ipAddress)>0) {
-				$useSSL = $this->ReadPropertyBoolean(Properties::USESSL);
-
 				$this->SendDebug(__FUNCTION__, 'Trying to retrive the device information...', 0);
 				$this->SendDebug(__FUNCTION__, sprintf('The IP Address is %s', $ipAddress), 0);
 				
+				$useSSL = $this->ReadPropertyBoolean(Properties::USESSL);
 				$device = new MillLocalAPI($ipAddress, $useSSL);
 				
 				$operationMode = self::MapOperationModeToInt($device->OperationMode());
@@ -199,12 +196,30 @@ class Heater extends IPSModule {
 				if($operationMode>0) {
 					$this->SendDebug(__FUNCTION__, sprintf('Operation Mode: %s', $device->OperationMode()), 0);
 					$this->SetValueEx(Variables::OPMODE_IDENT, $operationMode);
+
+					if($operationMode!=OperationMode::OFF_ID) {
+						$this->SetValueEx(Variables::POWER_IDENT, false);
+						$this->DisableAction(Variable::OPMODE_IDENT);
+						$this->DisableAction(Variable::SETPOINT_IDENT);
+					} else {
+						$this->SetValueEx(Variables::POWER_IDENT, true);
+						$this->EnableAction(Variable::OPMODE_IDENT);
+						if($operationMode!=OperationMode::WEEKLYPROGRAM_ID) {
+							$this->EnableAction(Variable::SETPOINT_IDENT);
+						}
+					}
 				} else {
 					$this->SendDebug(__FUNCTION__, sprintf('Failed to retrive device information from %s', $ipAddress), 0);
+					return;
 				}
 
+				$this->SendDebug(__FUNCTION__, sprintf('Tempearature is: %f', $device->Temperature()), 0);
 				$this->SetValueEx(Variables::TEMP_IDENT, $device->Temperature());
+
+				$this->SendDebug(__FUNCTION__, sprintf('Setpoint is: %f', $device->Setpoint()), 0);
 				$this->SetValueEx(Variables::SETPOINT_IDENT, $device->Setpoint());
+				
+				$this->SendDebug(__FUNCTION__, sprintf('Humidity is: %f', $device->Humidity()), 0);
 				$this->SetValueEx(Variables::HUMIDITY_IDENT, $device->Humidity());
 			
 			}
@@ -225,7 +240,9 @@ class Heater extends IPSModule {
 		if($State) {
 			$this->SetOperationMode($this->GetValue(Variables::OPMODE_IDENT));
 			$this->EnableAction(Variable::OPMODE_IDENT);
-			$this->EnableAction(Variable::SETPOINT_IDENT);	
+			if($operationMode!=$this->GetValue(Variables::OPMODE_IDENT) {
+				$this->EnableAction(Variable::SETPOINT_IDENT);
+			}	
 		} else {
 			$this->SetOperationMode(OperationMode::OFF_ID);
 			$this->DisableAction(Variable::OPMODE_IDENT);
