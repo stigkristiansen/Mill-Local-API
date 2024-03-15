@@ -97,8 +97,8 @@ class Heater extends IPSModule {
 		}
 	}
  
-	
-	private function int MapOperationModeToInt(string $OperationMode) {
+
+	private function MapOperationModeToInt(string $OperationMode) : int {
 		switch (strtolower($OperationMode)) {
 			case strtolower(EOperationMode::Off):
 				return 1;
@@ -113,7 +113,7 @@ class Heater extends IPSModule {
 		}
 	}
 
-	private function string MapOperationModeToString(int $OperationMode) {
+	private function MapOperationModeToString(int $OperationMode) : string {
 		switch ($OperationMode) {
 			case 1:
 				return EOperationMode::Off;
