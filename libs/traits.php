@@ -74,7 +74,7 @@ trait HttpRequest {
                     }
                 } 
 
-                throw new Exception(Errors::INVALDJSON, $url, $originalResult));
+                throw new Exception(Errors::INVALDJSON, $url, $originalResult);
             }
 		} else
         throw new Exception(sprintf(Errors::HOSTNOTRESPONDING, $this->ipAddress));
