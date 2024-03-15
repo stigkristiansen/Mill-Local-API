@@ -30,12 +30,12 @@ class Heater extends IPSModule {
 		$this->RegisterVariableInteger(Variables::OPMODE_IDENT, Variables::OPMODE_TEXT, Profiles::OPMODE, 2);
 		$this->EnableAction(Variables::OPMODE_IDENT);
 
-		$this->RegisterVariableFloat(Variables::TEMP_IDENT, Variables::TEMP_TEXT, '~Temperature');
+		$this->RegisterVariableFloat(Variables::TEMP_IDENT, Variables::TEMP_TEXT, '~Temperature', 3);
 
-		$this->RegisterVariableFloat(Variables::HUMIDITY_IDENT, Variables::HUMIDITY_TEXT, '~Humidity.F');
-
-		$this->RegisterVariableFloat(Variables::SETPOINT_IDENT, Variables::SETPOINT_TEXT, '~Temperature.Room');
+		$this->RegisterVariableFloat(Variables::SETPOINT_IDENT, Variables::SETPOINT_TEXT, '~Temperature.Room', 4);
 		$this->EnableAction(Variables::SETPOINT_IDENT);
+
+		$this->RegisterVariableFloat(Variables::HUMIDITY_IDENT, Variables::HUMIDITY_TEXT, '~Humidity.F', 5);
 		
 		$this->RegisterTimer(Timers::UPDATE . (string) $this->InstanceID, 0, 'IPS_RequestAction(' . (string)$this->InstanceID . ', "Update", 0);');
 
@@ -195,13 +195,13 @@ class Heater extends IPSModule {
 						
 				if($operationMode>0) {
 					$this->SendDebug(__FUNCTION__, sprintf('Operation Mode: %s(%d)', $device->OperationMode(), $operationMode), 0);
-					$this->SetValueEx(Variables::OPMODE_IDENT, $operationMode);
-
+					
 					if($operationMode==OperationMode::OFF_ID) {
 						$this->SetValueEx(Variables::POWER_IDENT, false);
 						$this->DisableAction(Variables::OPMODE_IDENT);
 						$this->DisableAction(Variables::SETPOINT_IDENT);
 					} else {
+						$this->SetValueEx(Variables::OPMODE_IDENT, $operationMode);
 						$this->SetValueEx(Variables::POWER_IDENT, true);
 						$this->EnableAction(Variables::OPMODE_IDENT);
 						if($operationMode!=OperationMode::WEEKLYPROGRAM_ID) {
