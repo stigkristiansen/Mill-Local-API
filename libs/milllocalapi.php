@@ -33,7 +33,6 @@ class MillLocalAPI {
 
         $status = self::GetControlStatus();
         if($status!==false) {
-            IPS_LogMessage('Mill'. 'Got ControlStatus');
             $this->temperature = $status->ambient_temperature;
             $this->setpoint = $status->set_temperature;
         }
