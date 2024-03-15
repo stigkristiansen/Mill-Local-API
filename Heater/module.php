@@ -73,7 +73,7 @@ class Heater extends IPSModule {
      }
 
 	public function RequestAction($Ident, $Value) {
-		$msg = sprintf('RequestAction was called: %s:%s', (string)$Ident, (string)$Value);
+		$msg = sprintf(Debug::REQUESTACTIONCALLED, (string)$Ident, (string)$Value);
 		$this->SendDebug(__FUNCTION__, $msg, 0);
 		
 		try {
@@ -128,27 +128,27 @@ class Heater extends IPSModule {
 	}
 
 	private function SetDeviceProperties() {
-		$this->SendDebug(__FUNCTION__, 'Entering function..', 0);
+		$this->SendDebug(__FUNCTION__, Debug::ENTERINGFUNCTION, 0);
 
 		try {
 			$ipAddress = $this->ReadPropertyString(Properties::IPADDRESS);
 			If(strlen($ipAddress)>0) {
 				$useSSL = $this->ReadPropertyBoolean(Properties::USESSL);
 
-				$this->SendDebug(__FUNCTION__, 'Trying to retrive the device information...', 0);
-				$this->SendDebug(__FUNCTION__, sprintf('The IP Address is %s', $ipAddress), 0);
+				$this->SendDebug(__FUNCTION__, Debug::RETRIVEINFO, 0);
+				$this->SendDebug(__FUNCTION__, sprintf(Debug::IPADDRESS, $ipAddress), 0);
 				
 				$device = new MillLocalAPI($ipAddress, $useSSL);
 				
 				$name = $device->Name();
 						
 				if(strlen($name)>0) {
-					$this->SendDebug(__FUNCTION__, sprintf('Device name: %s', $name), 0);
+					$this->SendDebug(__FUNCTION__, sprintf(Debug::DEVICENAME, $name), 0);
 
 					$customName = $device->CustomName();
-					$this->SendDebug(__FUNCTION__, sprintf('Device Custom Name: %s', $customName), 0);
+					$this->SendDebug(__FUNCTION__, sprintf(Debug::DEVICECUSTOMNAME, $customName), 0);
 
-					$this->SendDebug(__FUNCTION__, sprintf('Updating form...', $name), 0);
+					$this->SendDebug(__FUNCTION__, sprintf(Debug::UPDATINGFORM, $name), 0);
 					
 					$orgName = $this->ReadPropertyString(Properties::NAME);
 					$orgCustomName = $this->ReadPropertyString(Properties::CUSTOMNAME);
@@ -168,7 +168,7 @@ class Heater extends IPSModule {
 						IPS_ApplyChanges($this->InstanceID);
 
 				} else {
-					$this->SendDebug(__FUNCTION__, sprintf('Failed to retrive device information! %s', $name), 0);
+					$this->SendDebug(__FUNCTION__, sprintf(Debug::DEVICEINFOFAILED, $name), 0);
 				}
 			
 			}
@@ -180,13 +180,13 @@ class Heater extends IPSModule {
 	}
 
 	private function UpdateVariables() {
-		$this->SendDebug(__FUNCTION__, 'Entering function..', 0);
+		$this->SendDebug(__FUNCTION__, Debug::ENTERINGFUNCTION, 0);
 
 		try {
 			$ipAddress = $this->ReadPropertyString(Properties::IPADDRESS);
 			If(strlen($ipAddress)>0) {
-				$this->SendDebug(__FUNCTION__, 'Trying to retrive the device information...', 0);
-				$this->SendDebug(__FUNCTION__, sprintf('The IP Address is %s', $ipAddress), 0);
+				$this->SendDebug(__FUNCTION__, Debug::RETRIVEINFO, 0);
+				$this->SendDebug(__FUNCTION__, sprintf(Debug::IPADDRESS, $ipAddress), 0);
 				
 				$useSSL = $this->ReadPropertyBoolean(Properties::USESSL);
 				$device = new MillLocalAPI($ipAddress, $useSSL);
@@ -194,7 +194,7 @@ class Heater extends IPSModule {
 				$operationMode = self::MapOperationModeToInt($device->OperationMode());
 						
 				if($operationMode>0) {
-					$this->SendDebug(__FUNCTION__, sprintf('Operation Mode: %s(%d)', $device->OperationMode(), $operationMode), 0);
+					$this->SendDebug(__FUNCTION__, sprintf(Debug::OPERATIONMODE, $device->OperationMode(), $operationMode), 0);
 					
 					if($operationMode==OperationMode::OFF_ID) {
 						$this->SetValueEx(Variables::POWER_IDENT, false);
@@ -209,17 +209,17 @@ class Heater extends IPSModule {
 						}
 					}
 				} else {
-					$this->SendDebug(__FUNCTION__, sprintf('Failed to retrive device information from %s', $ipAddress), 0);
+					$this->SendDebug(__FUNCTION__, sprintf(Debug::DEVICEINFOFAILED, $name), 0);
 					return;
 				}
 
-				$this->SendDebug(__FUNCTION__, sprintf('Tempearature is: %f', $device->Temperature()), 0);
+				$this->SendDebug(__FUNCTION__, sprintf(Debug::TEMPERATURE, $device->Temperature()), 0);
 				$this->SetValueEx(Variables::TEMP_IDENT, $device->Temperature());
 
-				$this->SendDebug(__FUNCTION__, sprintf('Setpoint is: %f', $device->Setpoint()), 0);
+				$this->SendDebug(__FUNCTION__, sprintf(Debug::SETPOINT, $device->Setpoint()), 0);
 				$this->SetValueEx(Variables::SETPOINT_IDENT, $device->Setpoint());
 				
-				$this->SendDebug(__FUNCTION__, sprintf('Humidity is: %f', $device->Humidity()), 0);
+				$this->SendDebug(__FUNCTION__, sprintf(Debug::HUMIDITY, $device->Humidity()), 0);
 				$this->SetValueEx(Variables::HUMIDITY_IDENT, $device->Humidity());
 			
 			}
@@ -228,7 +228,6 @@ class Heater extends IPSModule {
 			$this->LogMessage($msg, KL_ERROR);
 			$this->SendDebug(__FUNCTION__, $msg, 0);
 		} 
-
 	}
 
 	private function SetTimers() {
@@ -236,7 +235,10 @@ class Heater extends IPSModule {
 	}
 
 	private function Power(bool $State) {
-		$this->SendDebug(__FUNCTION__, 'Entering function..', 0);
+		$this->SendDebug(__FUNCTION__, Debug::ENTERINGFUNCTION, 0);
+
+		$this->SetValueEx(Variables::POWER_ID, $State);
+
 		if($State) {
 			$operationMode = $this->GetValue(Variables::OPMODE_IDENT);
 			$this->SetOperationMode($operationMode);
@@ -253,14 +255,15 @@ class Heater extends IPSModule {
 	}
 
 	private function SetOperationMode(int $Mode) {
-		$this->SendDebug(__FUNCTION__, 'Entering function..', 0);
+		$this->SendDebug(__FUNCTION__, Debug::ENTERINGFUNCTION, 0);
+
 		try {
 			$ipAddress = $this->ReadPropertyString(Properties::IPADDRESS);
 			If(strlen($ipAddress)>0) {
 				$useSSL = $this->ReadPropertyBoolean(Properties::USESSL);
 
-				$this->SendDebug(__FUNCTION__, 'Trying to set operation mode...', 0);
-				$this->SendDebug(__FUNCTION__, sprintf('The IP Address is %s', $ipAddress), 0);
+				$this->SendDebug(__FUNCTION__, Debug::SETOPERATIONMODE, 0);
+				$this->SendDebug(__FUNCTION__, sprintf(Debug::IPADDRESS, $ipAddress), 0);
 				
 				$device = new MillLocalAPI($ipAddress, $useSSL);
 				
@@ -268,12 +271,12 @@ class Heater extends IPSModule {
 						
 				if($operationMode!==false) {
 					$device->SetOperationMode($operationMode);
-					$this->SendDebug(__FUNCTION__, sprintf('Selected Operation Mode: %s', $operationMode), 0);
+					$this->SendDebug(__FUNCTION__, sprintf(Debug::SELECTEDOPERATIONMODE, $operationMode), 0);
 					if($Mode!=OperationMode::OFF_ID) {
 						$this->SetValueEx(Variables::OPMODE_IDENT, $Mode);
 					}
 				} else {
-					$this->SendDebug(__FUNCTION__, sprintf('Failed to set operation mode for %s. The mode was %d', $ipAddress, $Mode), 0);
+					$this->SendDebug(__FUNCTION__, sprintf(Debug::OPERATIONMODEFAILED, $ipAddress, $Mode), 0);
 				}
 			}
 		} catch(Exception $e) {
@@ -285,19 +288,20 @@ class Heater extends IPSModule {
 	}
 
 	private function SetSetpoint(float $Temperature) {
-		$this->SendDebug(__FUNCTION__, 'Entering function..', 0);
+		$this->SendDebug(__FUNCTION__, Debug::ENTERINGFUNCTION, 0);
+
 		try {
 			$ipAddress = $this->ReadPropertyString(Properties::IPADDRESS);
 			If(strlen($ipAddress)>0) {
 				$useSSL = $this->ReadPropertyBoolean(Properties::USESSL);
 
-				$this->SendDebug(__FUNCTION__, 'Trying to adjust the setpoint...', 0);
-				$this->SendDebug(__FUNCTION__, sprintf('The IP Address is %s', $ipAddress), 0);
+				$this->SendDebug(__FUNCTION__, Debug::ADJUSTSETPOINT, 0);
+				$this->SendDebug(__FUNCTION__, sprintf(Debug::IPADDRESS, $ipAddress), 0);
 				
 				$device = new MillLocalAPI($ipAddress, $useSSL);
 								
 				$device->SetSetpoint($Temperature);
-				$this->SendDebug(__FUNCTION__, sprintf('New setpoint is: %d', $Temperature), 0);
+				$this->SendDebug(__FUNCTION__, sprintf(Debug::NEWSETPOINT, $Temperature), 0);
 				$this->SetValueEX(Variables::OPMODE_IDENT, $Mode);
 			}
 		} catch(Exception $e) {
@@ -308,6 +312,8 @@ class Heater extends IPSModule {
 	}
 
 	private function Update() {
+		$this->SendDebug(__FUNCTION__, Debug::ENTERINGFUNCTION, 0);
+
 		$this->SetDeviceProperties();
 		$this->UpdateVariables();
 	}

@@ -7,7 +7,25 @@ class Errors {
 }
 
 class Debug {
+    const ENTERINGFUNCTION = 'Entering function..';
+    const REQUESTACTIONCALLED = 'RequestAction was called: %s:%s';
+    const RETRIVEINFO = 'Trying to retrive the device information...';
+    const IPADDRESS = 'IP Address: %s';
+    const DEVICENAME = 'Device name: %s';
+    const DEVICECUSTOMNAME = 'Device Custom Name: %s';
+    const UPDATINGFORM = 'Updating form...';
+    const DEVICEINFOFAILED = 'Failed to retrive device information! %s';
+    const OPERATIONMODE = 'Operation Mode: %s (%d)';
+    const TEMPERATURE = 'Tempearature is: %f';
+    const SETPOINT = 'Setpoint is: %f';
+    const HUMIDITY = 'Humidity is: %f';
+    const SETOPERATIONMODE = 'Trying to set operation mode...';
+    const SELECTEDOPERATIONMODE = 'Selected Operation Mode: %s';
+    const OPERATIONMODEFAILED = 'Failed to set operation mode for %s. The mode was %d';
+    const ADJUSTSETPOINT = 'Trying to adjust the setpoint...';
+    const NEWSETPOINT = 'New setpoint is: %f';
 }
+
 
 class Properties {
     const NAME = 'Name';
