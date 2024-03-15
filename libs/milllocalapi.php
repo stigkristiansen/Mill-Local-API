@@ -15,6 +15,7 @@ class MillLocalAPI {
     private $operationMode;
     private $temperature;
     private $setpoint;
+    private $humidity;
     
     public function __construct(string $IpAddress, $UseSSL = False) {
         $this->ipAddress = $IpAddress;
@@ -26,15 +27,17 @@ class MillLocalAPI {
             $this->customName = $device->custom_name;
         }
 
-        $mode = self::GetOperationMode();
+        /*$mode = self::GetOperationMode();
         if($mode!==false) {
             $this->operationMode = $mode->mode;
-        }
+        }*/
 
         $status = self::GetControlStatus();
         if($status!==false) {
-            $this->temperature = $status->ambient_temperature;
+            $this->temperature = round($status->ambient_temperature,1);
             $this->setpoint = $status->set_temperature;
+            $this->humidity = $status->humidity;
+            $this->operationMode = $status->operation_mode;
         }
     }
 
@@ -52,6 +55,10 @@ class MillLocalAPI {
 
     public function Setpoint() {
         return $this->setpoint;
+    }
+
+    public function Humidity() {
+        return $this->humidity;
     }
 
     public function OperationMode() {
