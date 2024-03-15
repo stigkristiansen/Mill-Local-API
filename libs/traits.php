@@ -21,14 +21,14 @@ trait HttpRequest {
                     if(isset($result->status) && $result->status=='ok') {
                         return $result;
                     } else if(isset($result->status)) {
-                        throw new Exception(sprintf("%s returned: error %s:", $url, $result->status));
+                        throw new Exception(sprintf(Errors::REQUESTRETURNED, $url, $result->status));
                     }
                 } 
 
-                throw new Exception(sprintf("%s returned invalid JSON. The returned value was \"%s\"", $url, $originalResult));
+                throw new Exception(sprintf(Errors::INVALDJSON, $url, $originalResult));
             }
 		} else
-			throw new Exception(sprintf('Host %s is not responding', $this->ipAddress));
+            throw new Exception(sprintf(Errors::HOSTNOTRESPONDING, $this->ipAddress));
     }
 
     protected function HttpPost(string $DeltaUrl, bool $ReturnResult=True) : object {
@@ -45,14 +45,14 @@ trait HttpRequest {
                     if(isset($result->status) && $result->status=='ok') {
                         return $result;
                     } else if(isset($result->status)) {
-                        throw new Exception(sprintf("%s returned: error %s:", $url, $result->status));
+                        throw new Exception(sprintf(Errors::REQUESTRETURNED, $url, $result->status));
                     }
                 } 
 
-                throw new Exception(sprintf("%s returned invalid JSON. The returned value was %s", $url, $originalResult));
+                throw new Exception(sprintf(Erros::INVALDJSON, $url, $originalResult));
             }
 		} else
-			throw new Exception(sprintf('Host %s is not responding', $this->ipAddress));	    
+			throw new Exception(sprintf(Errors::HOSTNOTRESPONDING, $this->ipAddress));	    
     }
 
     
@@ -70,14 +70,14 @@ trait HttpRequest {
                     if(isset($result->status) && $result->status=='ok') {
                         return $result;
                     } else if(isset($result->status)) {
-                        throw new Exception(sprintf("%s returned: error %s:", $url, $result->status));
+                        throw new Exception(sprintf(Errors::REQUESTRETURNED, $url, $result->status));
                     }
                 } 
 
-                throw new Exception(sprintf("%s returned invalid JSON. The returned value was %s", $url, $originalResult));
+                throw new Exception(Errors::INVALDJSON, $url, $originalResult));
             }
 		} else
-			throw new Exception(sprintf('Host %s is not responding', $this->ipAddress));	
+        throw new Exception(sprintf(Errors::HOSTNOTRESPONDING, $this->ipAddress));
     }
 
     protected function Ping(string $IpAddress) : bool {
@@ -123,7 +123,7 @@ trait HttpRequest {
 		if($result!==false)
             return $result;
 		else
-            throw new Exception(sprintf("\"%s\" failed. The error was \"%s\"", $Url, curl_error($ch)));
+            throw new Exception(sprintf(Errors::REQUESTFAILED, $Url, curl_error($ch)));
 	}
 }
 

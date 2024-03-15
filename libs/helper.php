@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 class Errors {
     const UNEXPECTED = 'An unexpected error occured. The error was "%s"';
+    const REQUESTRETURNED = '%s returned: error %s:';
+    const INVALDJSON = '%s returned invalid JSON. The returned value was \"%s\"';
+    const HOSTNOTRESPONDING = 'Host %s is not responding';
+    const REQUESTFAILED = '\"%s\" failed. The error was \"%s\"';
 }
 
 class Debug {
