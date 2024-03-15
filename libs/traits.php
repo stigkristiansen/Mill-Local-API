@@ -7,7 +7,7 @@ trait HttpRequest {
         return $this->useSSL?'https://':'http://';
     }
 
-    protected function HttpGet(string $DeltaUrl, bool $ReturnResult=True) : string {
+    protected function HttpGet(string $DeltaUrl, bool $ReturnResult=True) : object {
 		if(self::Ping($this->ipAddress)) {
             $url = $this->GetScheme() . $this->ipAddress . $DeltaUrl;
 
@@ -31,7 +31,7 @@ trait HttpRequest {
 			throw new Exception(sprintf('Host %s is not responding', $this->ipAddress));
     }
 
-    protected function HttpPost(string $DeltaUrl, bool $ReturnResult=True) : string {
+    protected function HttpPost(string $DeltaUrl, bool $ReturnResult=True) : object {
         if(self::Ping($this->ipAddress)) {
 			$url = $this->GetScheme() . $this->ipAddress . $DeltaUrl;
 
@@ -56,7 +56,7 @@ trait HttpRequest {
     }
 
     
-    protected function HttpPostJson(string $DeltaUrl, string $JsonParams, bool $ReturnResult=True) : string {
+    protected function HttpPostJson(string $DeltaUrl, string $JsonParams, bool $ReturnResult=True) : object {
 	    if(self::Ping($this->ipAddress)) {
             $url = $this->GetScheme() . $this->ipAddress . $DeltaUrl;
 
