@@ -98,35 +98,7 @@ class Heater extends IPSModule {
 	}
  
 
-	private function MapOperationModeToInt(string $OperationMode) : int {
-		switch (strtolower($OperationMode)) {
-			case strtolower(EOperationMode::Off):
-				return 1;
-			case strtolower(EOperationMode::WeeklyProgram):
-				return 2;
-			case strtolower(EOperationMode::IndependentDevice):
-				return 3;
-			case strtolower(EOperationMode::ControlIndividually):
-				return 4;
-			default:
-				return 0;
-		}
-	}
-
-	private function MapOperationModeToString(int $OperationMode) : string | bool {
-		switch ($OperationMode) {
-			case 1:
-				return EOperationMode::Off;
-			case 2:
-				return EOperationMode::WeeklyProgram;
-			case 3:
-				return EOperationMode::IndependentDevice;
-			case 4:
-				return EOperationMode::ControlIndividually;
-			default:
-				return false;
-		}
-	}
+	
 
 	private function SetDeviceProperties() {
 		$this->SendDebug(__FUNCTION__, Debug::ENTERINGFUNCTION, 0);
@@ -192,7 +164,7 @@ class Heater extends IPSModule {
 				$useSSL = $this->ReadPropertyBoolean(Properties::USESSL);
 				$device = new MillLocalAPI($ipAddress, $useSSL);
 				
-				$operationMode = self::MapOperationModeToInt($device->OperationMode());
+				$operationMode = MillLocalAPI::MapOperationModeToInt($device->OperationMode());
 						
 				if($operationMode>0) {
 					$this->SendDebug(__FUNCTION__, sprintf(Debug::OPERATIONMODE, $device->OperationMode(), $operationMode), 0);
@@ -268,7 +240,7 @@ class Heater extends IPSModule {
 				
 				$device = new MillLocalAPI($ipAddress, $useSSL);
 				
-				$operationMode = self::MapOperationModeToString($Mode);
+				$operationMode = MillLocalAPI::MapOperationModeToString($Mode);
 						
 				if($operationMode!==false) {
 					$device->SetOperationMode($operationMode);

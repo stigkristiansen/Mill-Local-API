@@ -120,4 +120,34 @@ class MillLocalAPI {
     public function Reboot() {
         self::httpPost('/reboot', False);
     }
+
+    public static function MapOperationModeToInt(string $OperationMode) : int {
+		switch (strtolower($OperationMode)) {
+			case strtolower(EOperationMode::Off):
+				return 1;
+			case strtolower(EOperationMode::WeeklyProgram):
+				return 2;
+			case strtolower(EOperationMode::IndependentDevice):
+				return 3;
+			case strtolower(EOperationMode::ControlIndividually):
+				return 4;
+			default:
+				return 0;
+		}
+	}
+
+	public static function MapOperationModeToString(int $OperationMode) : string | bool {
+		switch ($OperationMode) {
+			case 1:
+				return EOperationMode::Off;
+			case 2:
+				return EOperationMode::WeeklyProgram;
+			case 3:
+				return EOperationMode::IndependentDevice;
+			case 4:
+				return EOperationMode::ControlIndividually;
+			default:
+				return false;
+		}
+	}
 }
