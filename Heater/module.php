@@ -113,7 +113,7 @@ class Heater extends IPSModule {
 		}
 	}
 
-	private function MapOperationModeToString(int $OperationMode) : string {
+	private function MapOperationModeToString(int $OperationMode) : string | bool {
 		switch ($OperationMode) {
 			case 1:
 				return EOperationMode::Off;
