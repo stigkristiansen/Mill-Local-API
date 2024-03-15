@@ -96,7 +96,8 @@ class Heater extends IPSModule {
 			$this->SendDebug(__FUNCTION__, $msg, 0);
 		}
 	}
-
+ 
+	
 	private function int MapOperationModeToInt(string $OperationMode) {
 		switch (strtolower($OperationMode)) {
 			case strtolower(EOperationMode::Off):
