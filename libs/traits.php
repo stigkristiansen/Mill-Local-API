@@ -3,8 +3,10 @@
 declare(strict_types=1);
 
 trait HttpRequest {
+    public bool $UseSSL;
+    
     protected function GetScheme() {
-        return $this->useSSL?'https://':'http://';
+        return $this->UseSSL?'https://':'http://';
     }
 
     protected function HttpGet(string $DeltaUrl, bool $ReturnResult=True) : object {
@@ -289,5 +291,4 @@ trait Utils {
 		if($oldValue!=$Value)
 			$this->SetValue($Ident, $Value);
 	}
-
 }

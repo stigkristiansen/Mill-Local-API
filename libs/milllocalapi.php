@@ -36,8 +36,6 @@ class MillLocalAPI {
     use HttpRequest;
 
     public $IpAddress;
-    public bool $UseSSL;
-
     public $Name;
     public $CustomName;
     public $OperationMode;
