@@ -42,6 +42,7 @@ trait HttpRequest {
             $result = self::request('get', $url, $JsonParams);
 
             if($ReturnResult) {
+                IPS_LogMessage('PostOrGet', "json returned: " . $result);
                 $originalResult = $result;
                 $result = json_decode($result);
                 
@@ -127,14 +128,11 @@ trait HttpRequest {
 				curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
 				break;
 			case "post":
-                IPS_LogMessage('PostOrGet', "Type is POST");
-				curl_setopt($ch, CURLOPT_POST, 1 );
+                curl_setopt($ch, CURLOPT_POST, 1 );
 				break;
 			case "get":
-				// Get is default for cURL
-                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
-                IPS_LogMessage('PostOrGet', "Type is GET");
-				break;
+				curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
+                break;
 		}
 
         $headers = array(
