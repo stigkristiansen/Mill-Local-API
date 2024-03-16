@@ -38,6 +38,7 @@ trait HttpRequest {
 		if(self::Ping($this->IpAddress)) {
 			$url = $this->GetScheme() . $this->IpAddress . $DeltaUrl;
 			
+            $this->LogMessage('Before request get...', KL_ERROR);
             $result = self::request('get', $url, $JsonParams);
 
             if($ReturnResult) {
