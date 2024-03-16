@@ -121,18 +121,18 @@ trait HttpRequest {
 
     protected function Request($Type, $Url, $Data=NULL) : string | bool {
 		$ch = curl_init();
-
-        IPS_LogMessage('PostOrGet', "Type is " . $Type);
 		
 		switch(strtolower($Type)) {
 			case "put":
 				curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
 				break;
 			case "post":
+                IPS_LogMessage('PostOrGet', "Type is POST");
 				curl_setopt($ch, CURLOPT_POST, 1 );
 				break;
 			case "get":
 				// Get is default for cURL
+                IPS_LogMessage('PostOrGet', "Type is GET");
 				break;
 		}
 
