@@ -42,6 +42,7 @@ class MillLocalAPI {
     public $Temperature;
     public $Setpoint;
     public $Humidity;
+    public $ProgrammedSetpoint;
     
     public function __construct(string $IpAddress, $UseSSL = False) {
         $this->ipAddress = $IpAddress;
@@ -56,15 +57,28 @@ class MillLocalAPI {
         $status = self::GetControlStatus();
         if($status!==false) {
             $this->Temperature = round($status->ambient_temperature,1);
-            $this->Setpoint = $status->set_temperature;
+            $this->ProgrammedSetpoint = $status->set_temperature;
             $this->Humidity = round($status->humidity,1);
             $this->OperationMode = $status->operation_mode;
+        }
+
+        $setPoint = self::GetSetpoint();
+        if($setPoint!==false) {
+            $this->SetPoint = $setPoint->value;
         }
     }
 
     
     private function GetStatus() {
         return self::httpGet('/status');
+    }
+
+    private function GetSetpoint() {
+        $params = array('type' => ETemperatureType::Normal);
+
+        $jsonParams = json_encode($params);
+
+        return self::httpGetJson('/set-temperature', $jsonParams);
     }
 
     private function GetControlStatus() {

@@ -8,6 +8,7 @@ class Errors {
     const INVALDJSON = '%s returned invalid JSON. The returned value was \"%s\"';
     const HOSTNOTRESPONDING = 'Host %s is not responding';
     const REQUESTFAILED = '\"%s\" failed. The error was \"%s\"';
+    const INVALIDOPERATIONMODE = 'Operation Mode cannot be \"Weekely program\"!';
 }
 
 class Debug {
