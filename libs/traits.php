@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 trait HttpRequest {
     public bool $UseSSL=false;
+    public $IpAddress = '';
 
     protected function GetScheme() {
         return $this->UseSSL?'https://':'http://';

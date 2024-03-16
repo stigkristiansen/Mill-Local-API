@@ -35,7 +35,6 @@ class OperationMode {
 class MillLocalAPI {
     use HttpRequest;
 
-    public $IpAddress;
     public $Name;
     public $CustomName;
     public $OperationMode;
