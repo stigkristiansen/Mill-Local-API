@@ -61,9 +61,9 @@ class MillLocalAPI {
             $this->OperationMode = $status->operation_mode;
         }
 
-        $setPoint = self::GetSetpoint();
-        if($setPoint!==false) {
-            $this->SetPoint = $setPoint->value;
+        $setpoint = self::GetSetpoint();
+        if($setpoint!==false) {
+            $this->Setpoint = $setpoint->value;
         }
     }
 
