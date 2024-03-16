@@ -38,7 +38,7 @@ trait HttpRequest {
 		if(self::Ping($this->IpAddress)) {
 			$url = $this->GetScheme() . $this->IpAddress . $DeltaUrl;
 			
-			$result = self::request('get', $url, $JsonParams);
+            $result = self::request('get', $url, $JsonParams);
 
             if($ReturnResult) {
                 $originalResult = $result;

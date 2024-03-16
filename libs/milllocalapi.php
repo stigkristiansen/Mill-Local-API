@@ -77,7 +77,7 @@ class MillLocalAPI {
 
         $jsonParams = json_encode($params);
 
-        return self::httpGetJson('/set-temperature', $jsonParams);
+        return self::HttpGetJson('/set-temperature', $jsonParams);
     }
 
     private function GetControlStatus() {
