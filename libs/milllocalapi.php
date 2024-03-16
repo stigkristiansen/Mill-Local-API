@@ -35,15 +35,15 @@ class OperationMode {
 class MillLocalAPI {
     use HttpRequest;
 
-    private string $ipAddress;
-    private bool $useSSL;
+    public $IpAddress;
+    public bool $UseSSL;
 
-    private $name;
-    private $customName;
-    private $operationMode;
-    private $temperature;
-    private $setpoint;
-    private $humidity;
+    public $Name;
+    public $CustomName;
+    public $OperationMode;
+    public $Temperature;
+    public $Setpoint;
+    public $Humidity;
     
     public function __construct(string $IpAddress, $UseSSL = False) {
         $this->ipAddress = $IpAddress;
@@ -51,43 +51,20 @@ class MillLocalAPI {
 
         $device = self::GetStatus();
         if($device!==false) {
-            $this->name = $device->name;
-            $this->customName = $device->custom_name;
+            $this->Name = $device->name;
+            $this->CustomName = $device->custom_name;
         }
         
         $status = self::GetControlStatus();
         if($status!==false) {
-            $this->temperature = round($status->ambient_temperature,1);
-            $this->setpoint = $status->set_temperature;
-            $this->humidity = round($status->humidity,1);
-            $this->operationMode = $status->operation_mode;
+            $this->Temperature = round($status->ambient_temperature,1);
+            $this->Setpoint = $status->set_temperature;
+            $this->Humidity = round($status->humidity,1);
+            $this->OperationMode = $status->operation_mode;
         }
     }
 
-    public function Name() {
-        return $this->name;
-    }
-
-    public function CustomName() {
-        return $this->customName;
-    }
-
-    public function Temperature() {
-        return $this->temperature;
-    }
-
-    public function Setpoint() {
-        return $this->setpoint;
-    }
-
-    public function Humidity() {
-        return $this->humidity;
-    }
-
-    public function OperationMode() {
-        return $this->operationMode;
-    }
-
+    
     private function GetStatus() {
         return self::httpGet('/status');
     }

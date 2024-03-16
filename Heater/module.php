@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 require_once(__DIR__ . "/../libs/autoload.php");
@@ -110,12 +109,12 @@ class Heater extends IPSModule {
 				
 				$device = new MillLocalAPI($ipAddress, $useSSL);
 				
-				$name = $device->Name();
+				$name = $device->Name;
 						
 				if(strlen($name)>0) {
 					$this->SendDebug(__FUNCTION__, sprintf(Debug::DEVICENAME, $name), 0);
 
-					$customName = $device->CustomName();
+					$customName = $device->CustomName;
 					$this->SendDebug(__FUNCTION__, sprintf(Debug::DEVICECUSTOMNAME, $customName), 0);
 
 					$this->SendDebug(__FUNCTION__, sprintf(Debug::UPDATINGFORM, $name), 0);
@@ -161,10 +160,10 @@ class Heater extends IPSModule {
 				$useSSL = $this->ReadPropertyBoolean(Properties::USESSL);
 				$device = new MillLocalAPI($ipAddress, $useSSL);
 				
-				$operationMode = MillLocalAPI::MapOperationModeToInt($device->OperationMode());
+				$operationMode = MillLocalAPI::MapOperationModeToInt($device->OperationMode);
 						
 				if($operationMode>0) {
-					$this->SendDebug(__FUNCTION__, sprintf(Debug::OPERATIONMODE, $device->OperationMode(), $operationMode), 0);
+					$this->SendDebug(__FUNCTION__, sprintf(Debug::OPERATIONMODE, $device->OperationMode, $operationMode), 0);
 					
 					if($operationMode==OperationMode::OFF_ID) {
 						$this->SetValueEx(Variables::POWER_IDENT, false);
@@ -183,15 +182,14 @@ class Heater extends IPSModule {
 					return;
 				}
 
-				$this->SendDebug(__FUNCTION__, sprintf(Debug::TEMPERATURE, $device->Temperature()), 0);
-				$this->SetValueEx(Variables::TEMP_IDENT, $device->Temperature());
+				$this->SendDebug(__FUNCTION__, sprintf(Debug::TEMPERATURE, $device->Temperature), 0);
+				$this->SetValueEx(Variables::TEMP_IDENT, $device->Temperature);
 
-				$this->SendDebug(__FUNCTION__, sprintf(Debug::SETPOINT, $device->Setpoint()), 0);
-				$this->SetValueEx(Variables::SETPOINT_IDENT, $device->Setpoint());
+				$this->SendDebug(__FUNCTION__, sprintf(Debug::SETPOINT, $device->Setpoint), 0);
+				$this->SetValueEx(Variables::SETPOINT_IDENT, $device->Setpoint);
 				
-				$this->SendDebug(__FUNCTION__, sprintf(Debug::HUMIDITY, $device->Humidity()), 0);
-				$this->SetValueEx(Variables::HUMIDITY_IDENT, $device->Humidity());
-			
+				$this->SendDebug(__FUNCTION__, sprintf(Debug::HUMIDITY, $device->Humidity), 0);
+				$this->SetValueEx(Variables::HUMIDITY_IDENT, $device->Humidity);
 			}
 		} catch(Exception $e) {
 			$msg = sprintf(Errors::UNEXPECTED, $e->getMessage());
