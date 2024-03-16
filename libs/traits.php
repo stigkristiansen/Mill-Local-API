@@ -132,6 +132,7 @@ trait HttpRequest {
 				break;
 			case "get":
 				// Get is default for cURL
+                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
                 IPS_LogMessage('PostOrGet', "Type is GET");
 				break;
 		}
