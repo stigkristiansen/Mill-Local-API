@@ -38,11 +38,9 @@ trait HttpRequest {
 		if(self::Ping($this->IpAddress)) {
 			$url = $this->GetScheme() . $this->IpAddress . $DeltaUrl;
 			
-            IPS_LogMessage('PostOrGet', "Before GET request!");
             $result = self::request('get', $url, $JsonParams);
 
             if($ReturnResult) {
-                IPS_LogMessage('PostOrGet', "json returned: " . $result);
                 $originalResult = $result;
                 $result = json_decode($result);
                 
