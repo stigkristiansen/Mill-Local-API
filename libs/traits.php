@@ -3,8 +3,8 @@
 declare(strict_types=1);
 
 trait HttpRequest {
-    public bool $UseSSL;
-    
+    public bool $UseSSL=false;
+
     protected function GetScheme() {
         return $this->UseSSL?'https://':'http://';
     }
