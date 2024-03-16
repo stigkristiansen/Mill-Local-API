@@ -44,7 +44,7 @@ class MillLocalAPI {
     public $ProgrammedSetpoint;
     
     public function __construct(string $IpAddress, $UseSSL = False) {
-        $this->ipAddress = $IpAddress;
+        $this->IpAddress = $IpAddress;
         $this->useSSL = $UseSSL;
 
         $device = self::GetStatus();
