@@ -121,6 +121,8 @@ trait HttpRequest {
 
     protected function Request($Type, $Url, $Data=NULL) : string | bool {
 		$ch = curl_init();
+
+        IPS_LogMessage('PostOrGet', "Type is " . $Type);
 		
 		switch(strtolower($Type)) {
 			case "put":
