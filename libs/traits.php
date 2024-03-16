@@ -35,7 +35,7 @@ trait HttpRequest {
     }
 
     protected function HttpGetJson(string $DeltaUrl, string $JsonParams, bool $ReturnResult=True) : object {
-		if(self::Ping($IpAddress)) {
+		if(self::Ping($this->IpAddress)) {
 			$url = $this->GetScheme() . $this->IpAddress . $DeltaUrl;
 			
 			$result = self::request('get', $url, $JsonParams);
