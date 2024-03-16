@@ -10,8 +10,8 @@ trait HttpRequest {
     }
 
     protected function HttpGet(string $DeltaUrl, bool $ReturnResult=True) : object {
-		if(self::Ping($this->ipAddress)) {
-            $url = $this->GetScheme() . $this->ipAddress . $DeltaUrl;
+		if(self::Ping($this->IpAddress)) {
+            $url = $this->GetScheme() . $this->IpAddress . $DeltaUrl;
 
 			$result = self::Request ('get', $url);
             
@@ -30,12 +30,12 @@ trait HttpRequest {
                 throw new Exception(sprintf(Errors::INVALDJSON, $url, $originalResult));
             }
 		} else
-            throw new Exception(sprintf(Errors::HOSTNOTRESPONDING, $this->ipAddress));
+            throw new Exception(sprintf(Errors::HOSTNOTRESPONDING, $this->IpAddress));
     }
 
     protected function HttpGetJson(string $DeltaUrl, string $JsonParams, bool $ReturnResult=True) : object {
 		if(self::Ping($IpAddress)) {
-			$url = $this->GetScheme() . $this->ipAddress . $DeltaUrl;
+			$url = $this->GetScheme() . $this->IpAddress . $DeltaUrl;
 			
 			$result = self::request('get', $url, $JsonParams);
 
@@ -54,12 +54,12 @@ trait HttpRequest {
                 throw new Exception(Errors::INVALDJSON, $url, $originalResult);
             }
 		} else
-            throw new Exception(sprintf(Errors::HOSTNOTRESPONDING, $this->ipAddress));
+            throw new Exception(sprintf(Errors::HOSTNOTRESPONDING, $this->IpAddress));
     }
 
     protected function HttpPost(string $DeltaUrl, bool $ReturnResult=True) : object {
-        if(self::Ping($this->ipAddress)) {
-			$url = $this->GetScheme() . $this->ipAddress . $DeltaUrl;
+        if(self::Ping($this->IpAddress)) {
+			$url = $this->GetScheme() . $this->IpAddress . $DeltaUrl;
 
 			$result = self::Request('post', $url);
 
@@ -78,13 +78,13 @@ trait HttpRequest {
                 throw new Exception(sprintf(Erros::INVALDJSON, $url, $originalResult));
             }
 		} else
-			throw new Exception(sprintf(Errors::HOSTNOTRESPONDING, $this->ipAddress));	    
+			throw new Exception(sprintf(Errors::HOSTNOTRESPONDING, $this->IpAddress));	    
     }
 
     
     protected function HttpPostJson(string $DeltaUrl, string $JsonParams, bool $ReturnResult=True) : object {
-	    if(self::Ping($this->ipAddress)) {
-            $url = $this->GetScheme() . $this->ipAddress . $DeltaUrl;
+	    if(self::Ping($this->IpAddress)) {
+            $url = $this->GetScheme() . $this->IpAddress . $DeltaUrl;
 
 			$result = self::Request('post', $url, $JsonParams);
 
@@ -103,7 +103,7 @@ trait HttpRequest {
                 throw new Exception(Errors::INVALDJSON, $url, $originalResult);
             }
 		} else
-            throw new Exception(sprintf(Errors::HOSTNOTRESPONDING, $this->ipAddress));
+            throw new Exception(sprintf(Errors::HOSTNOTRESPONDING, $this->IpAddress));
     }
 
     protected function Ping(string $IpAddress) : bool {
