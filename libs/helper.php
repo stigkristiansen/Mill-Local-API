@@ -29,7 +29,7 @@ class Debug {
     const OPERATIONMODEFAILED = 'Failed to set operation mode for %s. The mode was %d';
     const ADJUSTSETPOINT = 'Trying to adjust the setpoint...';
     const NEWSETPOINT = 'New setpoint is: %.1f';
-    const PROGRAMMEDASETPOINT 'Porgrammed setpoint is: %.1f';
+    const PROGRAMMEDASETPOINT = 'Programmed setpoint is: %.1f';
 }
 
 
