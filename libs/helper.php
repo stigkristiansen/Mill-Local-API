@@ -29,6 +29,7 @@ class Debug {
     const OPERATIONMODEFAILED = 'Failed to set operation mode for %s. The mode was %d';
     const ADJUSTSETPOINT = 'Trying to adjust the setpoint...';
     const NEWSETPOINT = 'New setpoint is: %.1f';
+    const PROGRAMMEDASETPOINT 'Porgrammed setpoint is: %.1f';
 }
 
 
@@ -60,6 +61,8 @@ class Variables {
     const TEMP_TEXT = 'Temperature';
     const HUMIDITY_IDENT = 'humidity';
     const HUMIDITY_TEXT = 'Humidity';
+    const PROGRAMMEDSETPOINT_IDENT = 'progsetpoint';
+    const PROGRAMMEDSETPOINT_TEXT = 'Prog. setpoint';
 }
 
 

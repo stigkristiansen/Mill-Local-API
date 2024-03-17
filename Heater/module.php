@@ -31,10 +31,12 @@ class Heater extends IPSModule {
 
 		$this->RegisterVariableFloat(Variables::TEMP_IDENT, Variables::TEMP_TEXT, '~Temperature', 3);
 
-		$this->RegisterVariableFloat(Variables::SETPOINT_IDENT, Variables::SETPOINT_TEXT, '~Temperature.Room', 4);
+		$this->RegisterVariableFloat(Variables::PROGRAMMEDTEMP_IDENT, Variables::PROGRAMMEDTEMP_TEXT, '~Temperature', 4);
+
+		$this->RegisterVariableFloat(Variables::SETPOINT_IDENT, Variables::SETPOINT_TEXT, '~Temperature.Room', 5);
 		$this->EnableAction(Variables::SETPOINT_IDENT);
 
-		$this->RegisterVariableFloat(Variables::HUMIDITY_IDENT, Variables::HUMIDITY_TEXT, '~Humidity.F', 5);
+		$this->RegisterVariableFloat(Variables::HUMIDITY_IDENT, Variables::HUMIDITY_TEXT, '~Humidity.F', 6);
 		
 		$this->RegisterTimer(Timers::UPDATE . (string) $this->InstanceID, 0, 'IPS_RequestAction(' . (string)$this->InstanceID . ', "Update", 0);');
 
@@ -181,6 +183,10 @@ class Heater extends IPSModule {
 					$this->SendDebug(__FUNCTION__, sprintf(Debug::DEVICEINFOFAILED, $name), 0);
 					return;
 				}
+
+				
+				$this->SendDebug(__FUNCTION__, sprintf(Debug::PROGRAMMEDASETPOINT, $device->ProgrammedSetpoint), 0);
+				$this->SetValueEx(Variables::PROGRAMMEDSETPOINT_IDENT, $device->ProgrammedSetpoint);
 
 				$this->SendDebug(__FUNCTION__, sprintf(Debug::TEMPERATURE, $device->Temperature), 0);
 				$this->SetValueEx(Variables::TEMP_IDENT, $device->Temperature);
