@@ -57,6 +57,7 @@ class Heater extends IPSModule {
 		$module = json_decode(file_get_contents(__DIR__ . '/module.json'));
 		if(count(IPS_GetInstanceListByModuleID($module->id))==0) {
 			$this->DeleteProfile(Profiles::OPMODE);
+			$this->DeleteProfile(Profiles::SWITCHEDON);
 		}
 
 		//Never delete this line!
