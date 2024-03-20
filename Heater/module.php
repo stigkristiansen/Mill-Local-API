@@ -291,13 +291,13 @@ class Heater extends IPSModule {
 				
 				$device = new MillLocalAPI($ipAddress, $useSSL);
 						
-				if($device->OperationMode!=EOperationMode::WeeklyProgram) {
+				//if($device->OperationMode!=EOperationMode::WeeklyProgram) {
 					$device->SetSetpoint($Temperature);
 					$this->SendDebug(__FUNCTION__, sprintf(Debug::NEWSETPOINT, $Temperature), 0);
 					$this->SetValueEX(Variables::SETPOINT_IDENT, $Temperature);
-				} else {
+				//} else {
 					throw new Exception(Errors::INVALIDOPERATIONMODE);
-				}
+				//}
 			}
 		} catch(Exception $e) {
 			$msg = sprintf(Errors::UNEXPECTED, $e->getMessage());
