@@ -88,7 +88,7 @@ class MillLocalAPI {
     }
 
     private function GetSetpoint() {
-        $params = array('type' => ETemperatureType::Normal);
+        $params = array('type' => $this->ProgrammedTemperatureType);
 
         $jsonParams = json_encode($params);
 
