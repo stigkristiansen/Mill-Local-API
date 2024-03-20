@@ -140,4 +140,31 @@ class MillLocalAPI {
 				return false;
 		}
 	}
+
+    private Static function MinutesSinceMonday() : int {
+        $secsPerWeek = 604800;
+        $oldMonday = 	1710716400;
+    
+        $now = time();
+        $elapsed = $now-$oldMonday;
+    
+        $secsSinceMonday = $elapsed%$secsPerWeek;
+        
+        return intval($secsSinceMonday/60);
+    }
+
+    private function GetProgrammedTemperatureType(array $Timers, int $MinutesSinceMonday) : string {
+        $size = sizeof($Timers)-1;
+        
+        for($i=0;$i<$size;$i++) {
+            $timer1 = $Timers[$i]['timestamp'];
+            $timer2 = $Timers[$i+1]['timestamp'];
+            
+            if($MinutesSinceMonday>=$timer1 && $MinutesSinceMonday<$timer2) {
+                return $Timers[$i]['name'];
+            }
+        }
+    
+        return $Timers[sizeof($Timers)-1]['name'];
+    }
 }
