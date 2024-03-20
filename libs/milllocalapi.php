@@ -64,11 +64,6 @@ class MillLocalAPI {
             $this->SwitchedOn = $status->switched_on;
         }
 
-        $setpoint = self::GetSetpoint();
-        if($setpoint!==false) {
-            $this->Setpoint = $setpoint->value;
-        }
-        
         if($this->OperationMode==EOperationMode::WeeklyProgram) {
             $weeklyProgram = self::GetWeeklyProgram();
             
@@ -79,6 +74,11 @@ class MillLocalAPI {
             }
         } else {
             $this->ProgrammedTemperatureType = ETemperatureType::Normal;
+        }
+
+        $setpoint = self::GetSetpoint();
+        if($setpoint!==false) {
+            $this->Setpoint = $setpoint->value;
         }
     }
 
