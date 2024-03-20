@@ -43,7 +43,7 @@ class Heater extends IPSModule {
 
 		$this->RegisterVariableFloat(Variables::HUMIDITY_IDENT, Variables::HUMIDITY_TEXT, '~Humidity.F', 6);
 
-		$this->RegisterVariableBoolean(Variables::SWITCHEDON_IDENT, Variables::SWITCHEDON, Profiles::SWITCHEDON, 7);
+		$this->RegisterVariableBoolean(Variables::SWITCHEDON_IDENT, Variables::SWITCHEDON_TEXT, Profiles::SWITCHEDON, 7);
 
 		
 		$this->RegisterTimer(Timers::UPDATE . (string) $this->InstanceID, 0, 'IPS_RequestAction(' . (string)$this->InstanceID . ', "Update", 0);');
