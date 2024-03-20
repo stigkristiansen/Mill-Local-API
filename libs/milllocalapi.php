@@ -43,6 +43,7 @@ class MillLocalAPI {
     public $Humidity;
     public $ProgrammedSetpoint;
     public $SwitchedOn;
+     public $CurrentTemperatureType;
     
     public function __construct(string $IpAddress, $UseSSL = False) {
         $this->IpAddress = $IpAddress;
@@ -66,6 +67,12 @@ class MillLocalAPI {
         $setpoint = self::GetSetpoint();
         if($setpoint!==false) {
             $this->Setpoint = $setpoint->value;
+        }
+
+        $weeklyProgram = self::GetWeeklyProgram();
+        if($weeklyProgram!==false) {
+            $timers = json_decode($weeklyProgram, true)['timers'];
+
         }
     }
 
@@ -111,6 +118,10 @@ class MillLocalAPI {
         self::httpPost('/reboot', False);
     }
 
+    private function GetWeeklyProgram() {
+        return self::httpGet('/weekly-program');
+    }
+
     public static function MapOperationModeToInt(string $OperationMode) : int {
 		switch (strtolower($OperationMode)) {
 			case strtolower(EOperationMode::Off):
@@ -153,18 +164,19 @@ class MillLocalAPI {
         return intval($secsSinceMonday/60);
     }
 
-    private function GetProgrammedTemperatureType(array $Timers, int $MinutesSinceMonday) : string {
+    private function GetProgrammedTemperatureType(array $Timers) : string {
         $size = sizeof($Timers)-1;
+        $minutesSinceMonday = self::MinutesSinceMonday();
         
         for($i=0;$i<$size;$i++) {
             $timer1 = $Timers[$i]['timestamp'];
             $timer2 = $Timers[$i+1]['timestamp'];
             
-            if($MinutesSinceMonday>=$timer1 && $MinutesSinceMonday<$timer2) {
+            if($minutesSinceMonday>=$timer1 && $minutesSinceMonday<$timer2) {
                 return $Timers[$i]['name'];
             }
         }
     
-        return $Timers[sizeof($Timers)-1]['name'];
+        return $Timers[$size-1]['name'];
     }
 }
