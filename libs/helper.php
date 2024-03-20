@@ -30,6 +30,7 @@ class Debug {
     const ADJUSTSETPOINT = 'Trying to adjust the setpoint...';
     const NEWSETPOINT = 'New setpoint is: %.1f';
     const PROGRAMMEDASETPOINT = 'Programmed setpoint is: %.1f';
+    const SWITCHEDON = 'Heating status is: %s';
 }
 
 
@@ -48,6 +49,8 @@ class Timers {
 class Profiles {
     const OPMODE = 'Mill.OperationMode';
     const OPMODE_ICON = 'Gear';
+    const SWITCHEDON = 'Mill.SwitchedOn';
+    const SWITCHEDON_ICON = 'Temperature';
 }
 
 class Variables {
@@ -63,6 +66,8 @@ class Variables {
     const HUMIDITY_TEXT = 'Humidity';
     const PROGRAMMEDSETPOINT_IDENT = 'progsetpoint';
     const PROGRAMMEDSETPOINT_TEXT = 'Prog. setpoint';
+    const SWITCHEDON_IDENT = 'switchedon';
+    const SWITCHEDON_TEXT = 'Status';
 }
 
 

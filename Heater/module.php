@@ -18,6 +18,11 @@ class Heater extends IPSModule {
 			[OperationMode::CONTROLINDIVIDUALLY_ID, OperationMode::CONTROLINDIVIDUALLY_TEXT, '', -1]
 		]);
 
+		$this->RegisterProfileBooleanEx(Profiles::SWITCHEDON, Profiles::SWITCHED_ICON, '', '', [
+			[True, 'Heating',  '', -1],
+			[False, 'Not Heating',  '', -1]
+		]);
+
 		$this->RegisterPropertyString(Properties::IPADDRESS, '');
 		$this->RegisterPropertyString(Properties::CUSTOMNAME, '');
 		$this->RegisterPropertyString(Properties::NAME, '');
@@ -37,6 +42,9 @@ class Heater extends IPSModule {
 		$this->EnableAction(Variables::SETPOINT_IDENT);
 
 		$this->RegisterVariableFloat(Variables::HUMIDITY_IDENT, Variables::HUMIDITY_TEXT, '~Humidity.F', 6);
+
+		$this->RegisterVariableBoolean(Variables::SWITCHEDON_IDENT, Variables::SWITCHEDON, Profiles::SWITCHEDON, 7);
+
 		
 		$this->RegisterTimer(Timers::UPDATE . (string) $this->InstanceID, 0, 'IPS_RequestAction(' . (string)$this->InstanceID . ', "Update", 0);');
 
@@ -183,7 +191,6 @@ class Heater extends IPSModule {
 					$this->SendDebug(__FUNCTION__, sprintf(Debug::DEVICEINFOFAILED, $name), 0);
 					return;
 				}
-
 				
 				$this->SendDebug(__FUNCTION__, sprintf(Debug::PROGRAMMEDASETPOINT, $device->ProgrammedSetpoint), 0);
 				$this->SetValueEx(Variables::PROGRAMMEDSETPOINT_IDENT, $device->ProgrammedSetpoint);
@@ -196,6 +203,9 @@ class Heater extends IPSModule {
 				
 				$this->SendDebug(__FUNCTION__, sprintf(Debug::HUMIDITY, $device->Humidity), 0);
 				$this->SetValueEx(Variables::HUMIDITY_IDENT, $device->Humidity);
+
+				$this->SendDebug(__FUNCTION__, sprintf(Debug::SWITCHEDON, $device->SwitchedOn?'True':'False'), 0);
+				$this->SetValueEx(Variables::SWITCHEDON_IDENT, $device->SwitchedOn);
 			}
 		} catch(Exception $e) {
 			$msg = sprintf(Errors::UNEXPECTED, $e->getMessage());

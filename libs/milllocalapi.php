@@ -42,6 +42,7 @@ class MillLocalAPI {
     public $Setpoint;
     public $Humidity;
     public $ProgrammedSetpoint;
+    public $SwitchedOn;
     
     public function __construct(string $IpAddress, $UseSSL = False) {
         $this->IpAddress = $IpAddress;
@@ -59,6 +60,7 @@ class MillLocalAPI {
             $this->ProgrammedSetpoint = $status->set_temperature;
             $this->Humidity = round($status->humidity,1);
             $this->OperationMode = $status->operation_mode;
+            $this->SwitchedOn = $status->switched_on;
         }
 
         $setpoint = self::GetSetpoint();
