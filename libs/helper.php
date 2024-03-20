@@ -51,7 +51,7 @@ class Profiles {
     const OPMODE_ICON = 'Gear';
     const SWITCHEDON = 'Mill.SwitchedOn';
     const SWITCHEDON_ICON = 'Temperature';
-}
+} 
 
 class Variables {
     const POWER_IDENT = 'power';
