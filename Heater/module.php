@@ -23,6 +23,8 @@ class Heater extends IPSModule {
 			[False, 'Not Heating',  '', -1]
 		]);
 
+		$this->RegisterProfileString(Profiles::TEMPTYPE, Profiles::TEMPTYPE_ICON, '', '');
+
 		$this->RegisterPropertyString(Properties::IPADDRESS, '');
 		$this->RegisterPropertyString(Properties::CUSTOMNAME, '');
 		$this->RegisterPropertyString(Properties::NAME, '');
@@ -37,7 +39,7 @@ class Heater extends IPSModule {
 		$this->RegisterVariableFloat(Variables::TEMP_IDENT, Variables::TEMP_TEXT, '~Temperature', 3);
 
 		$this->RegisterVariableFloat(Variables::PROGRAMMEDSETPOINT_IDENT, Variables::PROGRAMMEDSETPOINT_TEXT, '~Temperature', 4);
-		$this->RegisterVariableString(Variables::PROGRAMMEDTEMPTYPE_IDENT, variables::PROGRAMMEDTEMPTYPE_TEXT, '~Temperature', 5);
+		$this->RegisterVariableString(Variables::PROGRAMMEDTEMPTYPE_IDENT, variables::PROGRAMMEDTEMPTYPE_TEXT, Profiles::TEMPTYPE, 5);
 
 		$this->RegisterVariableFloat(Variables::SETPOINT_IDENT, Variables::SETPOINT_TEXT, '~Temperature.Room', 6);
 		$this->EnableAction(Variables::SETPOINT_IDENT);

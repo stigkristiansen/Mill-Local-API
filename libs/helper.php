@@ -52,6 +52,8 @@ class Profiles {
     const OPMODE_ICON = 'Gear';
     const SWITCHEDON = 'Mill.SwitchedOn';
     const SWITCHEDON_ICON = 'Temperature';
+    const TEMPTYPE = 'Mill.TemperatureType';
+    const TEMPTYPE_ICON = 'Temperature';
 } 
 
 class Variables {
