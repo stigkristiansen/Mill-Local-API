@@ -112,7 +112,7 @@ class MillLocalAPI {
     }
 
     public function SetSetpoint(float $Temperature) {
-        $params = array('type' => ETemperatureType::Normal,
+        $params = array('type' => ETemperatureType::Comfort,
                         'value' => $Temperature);
         
         $jsonParams = json_encode($params);
