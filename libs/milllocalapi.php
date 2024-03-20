@@ -73,7 +73,8 @@ class MillLocalAPI {
             $weeklyProgram = self::GetWeeklyProgram();
             
             if($weeklyProgram!==false) {
-                $timers = json_decode($weeklyProgram, true)['timers'];
+                $json = json_encode($weeklyProgram);
+                $timers = json_decode($json, true)['timers'];
                 $this->ProgrammedTemperatureType = self::GetProgrammedTemperatureType($timers);
             }
         } else {
