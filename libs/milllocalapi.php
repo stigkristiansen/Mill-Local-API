@@ -78,7 +78,7 @@ class MillLocalAPI {
                 $this->ProgrammedTemperatureType = self::GetProgrammedTemperatureType($timers);
             }
         } else {
-            $this->ProgrammedTemperatureType = '-';
+            $this->ProgrammedTemperatureType = ETemperatureType::Normal;
         }
     }
 
@@ -112,7 +112,7 @@ class MillLocalAPI {
     }
 
     public function SetSetpoint(float $Temperature) {
-        $params = array('type' => ETemperatureType::Comfort,
+        $params = array('type' => $this->ProgrammedTemperatureType,
                         'value' => $Temperature);
         
         $jsonParams = json_encode($params);

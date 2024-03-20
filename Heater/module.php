@@ -296,7 +296,7 @@ class Heater extends IPSModule {
 					$this->SendDebug(__FUNCTION__, sprintf(Debug::NEWSETPOINT, $Temperature), 0);
 					$this->SetValueEX(Variables::SETPOINT_IDENT, $Temperature);
 				//} else {
-					throw new Exception(Errors::INVALIDOPERATIONMODE);
+					//throw new Exception(Errors::INVALIDOPERATIONMODE);
 				//}
 			}
 		} catch(Exception $e) {
