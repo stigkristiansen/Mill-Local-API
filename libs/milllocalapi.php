@@ -43,7 +43,7 @@ class MillLocalAPI {
     public $Humidity;
     public $ProgrammedSetpoint;
     public $SwitchedOn;
-     public $CurrentTemperatureType;
+    public $ProgrammedTemperatureType;
     
     public function __construct(string $IpAddress, $UseSSL = False) {
         $this->IpAddress = $IpAddress;
@@ -68,11 +68,16 @@ class MillLocalAPI {
         if($setpoint!==false) {
             $this->Setpoint = $setpoint->value;
         }
-
-        $weeklyProgram = self::GetWeeklyProgram();
-        if($weeklyProgram!==false) {
-            $timers = json_decode($weeklyProgram, true)['timers'];
-
+        
+        if($this->OperationMode==EOperationMode::WeeklyProgram) {
+            $weeklyProgram = self::GetWeeklyProgram();
+            
+            if($weeklyProgram!==false) {
+                $timers = json_decode($weeklyProgram, true)['timers'];
+                $this->ProgrammedTemperatureType = self::GetProgrammedTemperatureType($timers);
+            }
+        } else {
+            $this->ProgrammedTemperatureType = '-';
         }
     }
 

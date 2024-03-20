@@ -31,6 +31,7 @@ class Debug {
     const NEWSETPOINT = 'New setpoint is: %.1f';
     const PROGRAMMEDASETPOINT = 'Programmed setpoint is: %.1f';
     const SWITCHEDON = 'Heating status is: %s';
+    const Debug::PROGRAMMEDTEMPTYPE = 'Programmed temperature type is: %s';
 }
 
 
@@ -66,6 +67,8 @@ class Variables {
     const HUMIDITY_TEXT = 'Humidity';
     const PROGRAMMEDSETPOINT_IDENT = 'progsetpoint';
     const PROGRAMMEDSETPOINT_TEXT = 'Prog. setpoint';
+    const PROGRAMMEDTEMPTYPE_IDENT = 'programmedtemptype';
+    const PROGRAMMEDTEMPTYPE_TEXT = 'Prog. temp. type';
     const SWITCHEDON_IDENT = 'switchedon';
     const SWITCHEDON_TEXT = 'Status';
 }

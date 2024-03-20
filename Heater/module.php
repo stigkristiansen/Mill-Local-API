@@ -37,13 +37,14 @@ class Heater extends IPSModule {
 		$this->RegisterVariableFloat(Variables::TEMP_IDENT, Variables::TEMP_TEXT, '~Temperature', 3);
 
 		$this->RegisterVariableFloat(Variables::PROGRAMMEDSETPOINT_IDENT, Variables::PROGRAMMEDSETPOINT_TEXT, '~Temperature', 4);
+		$this->RegisterVariableString(Variables::PROGRAMMEDTEMPTYPE_IDENT, variables::PROGRAMMEDTEMPTYPE_TEXT, '~Temperature', 5);
 
-		$this->RegisterVariableFloat(Variables::SETPOINT_IDENT, Variables::SETPOINT_TEXT, '~Temperature.Room', 5);
+		$this->RegisterVariableFloat(Variables::SETPOINT_IDENT, Variables::SETPOINT_TEXT, '~Temperature.Room', 6;
 		$this->EnableAction(Variables::SETPOINT_IDENT);
 
-		$this->RegisterVariableFloat(Variables::HUMIDITY_IDENT, Variables::HUMIDITY_TEXT, '~Humidity.F', 6);
+		$this->RegisterVariableFloat(Variables::HUMIDITY_IDENT, Variables::HUMIDITY_TEXT, '~Humidity.F', 7);
 
-		$this->RegisterVariableBoolean(Variables::SWITCHEDON_IDENT, Variables::SWITCHEDON_TEXT, Profiles::SWITCHEDON, 7);
+		$this->RegisterVariableBoolean(Variables::SWITCHEDON_IDENT, Variables::SWITCHEDON_TEXT, Profiles::SWITCHEDON, 8);
 
 		
 		$this->RegisterTimer(Timers::UPDATE . (string) $this->InstanceID, 0, 'IPS_RequestAction(' . (string)$this->InstanceID . ', "Update", 0);');
@@ -206,6 +207,9 @@ class Heater extends IPSModule {
 
 				$this->SendDebug(__FUNCTION__, sprintf(Debug::SWITCHEDON, $device->SwitchedOn?'True':'False'), 0);
 				$this->SetValueEx(Variables::SWITCHEDON_IDENT, $device->SwitchedOn);
+
+				$this->SendDebug(__FUNCTION__, sprintf(Debug::PROGRAMMEDTEMPTYPE, $device->ProgrammedTemperatureType), 0);
+				$this->SetValueEx(Variables::PROGRAMMEDTEMPTYPE_IDENT, $device->ProgrammedTemperatureType);
 			}
 		} catch(Exception $e) {
 			$msg = sprintf(Errors::UNEXPECTED, $e->getMessage());
