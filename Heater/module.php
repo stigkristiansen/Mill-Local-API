@@ -46,7 +46,7 @@ class Heater extends IPSModule {
 
 		$this->RegisterVariableFloat(Variables::HUMIDITY_IDENT, Variables::HUMIDITY_TEXT, '~Humidity.F', 7);
 
-		$this->RegisterVariableBoolean(Variables::SWITCHEDON_IDENT, Variables::SWITCHEDON_TEXT, Profiles::SWITCHEDON, 8);
+		//$this->RegisterVariableBoolean(Variables::SWITCHEDON_IDENT, Variables::SWITCHEDON_TEXT, Profiles::SWITCHEDON, 8);
 
 		
 		$this->RegisterTimer(Timers::UPDATE . (string) $this->InstanceID, 0, 'IPS_RequestAction(' . (string)$this->InstanceID . ', "Update", 0);');
@@ -211,8 +211,8 @@ class Heater extends IPSModule {
 					$this->SetValueEx(Variables::HUMIDITY_IDENT, $device->Humidity);
 				}
 				
-				$this->SendDebug(__FUNCTION__, sprintf(Debug::SWITCHEDON, $device->SwitchedOn?'True':'False'), 0);
-				$this->SetValueEx(Variables::SWITCHEDON_IDENT, $device->SwitchedOn);
+				//$this->SendDebug(__FUNCTION__, sprintf(Debug::SWITCHEDON, $device->SwitchedOn?'True':'False'), 0);
+				//$this->SetValueEx(Variables::SWITCHEDON_IDENT, $device->SwitchedOn);
 
 				$this->SendDebug(__FUNCTION__, sprintf(Debug::PROGRAMMEDTEMPTYPE, $device->ProgrammedTemperatureType), 0);
 				$this->SetValueEx(Variables::PROGRAMMEDTEMPTYPE_IDENT, $device->ProgrammedTemperatureType);
