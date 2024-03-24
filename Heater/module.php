@@ -206,7 +206,7 @@ class Heater extends IPSModule {
 				$this->SetValueEx(Variables::SETPOINT_IDENT, $device->Setpoint);
 				
 				$this->MaintainVariable(Variables::HUMIDITY_IDENT, Variables::HUMIDITY_TEXT, 2, '~Humidity.F', 7, $device->IsSocket);
-				if($devie->IsSocket) {
+				if($device->IsSocket) {
 					$this->SendDebug(__FUNCTION__, sprintf(Debug::HUMIDITY, $device->Humidity), 0);
 					$this->SetValueEx(Variables::HUMIDITY_IDENT, $device->Humidity);
 				}
