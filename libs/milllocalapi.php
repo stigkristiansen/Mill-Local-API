@@ -44,6 +44,7 @@ class MillLocalAPI {
     public $ProgrammedSetpoint;
     public $SwitchedOn;
     public $ProgrammedTemperatureType;
+    Public $IsSocket = false;
     
     public function __construct(string $IpAddress, $UseSSL = False) {
         $this->IpAddress = $IpAddress;
@@ -53,13 +54,20 @@ class MillLocalAPI {
         if($device!==false) {
             $this->Name = $device->name;
             $this->CustomName = $device->custom_name;
+
+            if(strpos(strtolower($this->Name), 'socket')!==false) {
+                $this->isSocket = true;
+            }
         }
         
         $status = self::GetControlStatus();
         if($status!==false) {
             $this->Temperature = round($status->ambient_temperature,1);
             $this->ProgrammedSetpoint = $status->set_temperature;
-            $this->Humidity = round($status->humidity,1);
+            if($this->isSocket) {
+                $this->Humidity = round($status->humidity,1);
+            }
+            
             $this->OperationMode = $status->operation_mode;
             $this->SwitchedOn = $status->switched_on;
         }
@@ -160,12 +168,12 @@ class MillLocalAPI {
 
     private Static function MinutesSinceMonday() : int {
         $secsPerWeek = 604800;
-        $oldMonday = 	1710716400;
+        $oldMonday = 	1710716400; // Midnight some monday
     
         $now = time();
-        $elapsed = $now-$oldMonday;
+        $elapsed = $now-$oldMonday; // Secs since "$oldMonday"
     
-        $secsSinceMonday = $elapsed%$secsPerWeek;
+        $secsSinceMonday = $elapsed%$secsPerWeek; // The modulus must be secs since monday in current week
         
         return intval($secsSinceMonday/60);
     }
