@@ -56,7 +56,7 @@ class MillLocalAPI {
             $this->CustomName = $device->custom_name;
 
             if(strpos(strtolower($this->Name), 'socket')!==false) {
-                $this->isSocket = true;
+                $this->IsSocket = true;
             }
         }
         
@@ -64,7 +64,7 @@ class MillLocalAPI {
         if($status!==false) {
             $this->Temperature = round($status->ambient_temperature,1);
             $this->ProgrammedSetpoint = $status->set_temperature;
-            if($this->isSocket) {
+            if($this->IsSocket) {
                 $this->Humidity = round($status->humidity,1);
             }
             
