@@ -35,7 +35,7 @@ class Heater extends IPSModule {
 
 		$this->RegisterVariableInteger(Variables::OPMODE_IDENT, Variables::OPMODE_TEXT, Profiles::OPMODE, 2);
 		$this->EnableAction(Variables::OPMODE_IDENT);
-
+		
 		$this->RegisterVariableFloat(Variables::TEMP_IDENT, Variables::TEMP_TEXT, '~Temperature', 3);
 
 		$this->RegisterVariableFloat(Variables::PROGRAMMEDSETPOINT_IDENT, Variables::PROGRAMMEDSETPOINT_TEXT, '~Temperature', 4);
@@ -235,6 +235,9 @@ class Heater extends IPSModule {
 
 		if($State) {
 			$operationMode = $this->GetValue(Variables::OPMODE_IDENT);
+			if($operationMode==0) { // Should only happens once after beeing created
+				$operationMode=OperationMode::WEEKLYPROGRAM_ID;
+			}
 			$this->SetOperationMode($operationMode);
 			$this->EnableAction(Variables::OPMODE_IDENT);
 			
