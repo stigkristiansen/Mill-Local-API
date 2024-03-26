@@ -18,10 +18,10 @@ class Heater extends IPSModule {
 			[OperationMode::CONTROLINDIVIDUALLY_ID, OperationMode::CONTROLINDIVIDUALLY_TEXT, '', -1]
 		]);
 
-		$this->RegisterProfileBooleanEx(Profiles::SWITCHEDON, Profiles::SWITCHEDON_ICON, '', '', [
-			[True, 'Heating',  '', -1],
-			[False, 'Not Heating',  '', -1]
-		]);
+		//$this->RegisterProfileBooleanEx(Profiles::SWITCHEDON, Profiles::SWITCHEDON_ICON, '', '', [
+		//	[True, 'Heating',  '', -1],
+		//	[False, 'Not Heating',  '', -1]
+		//]);
 
 		$this->RegisterProfileString(Profiles::TEMPTYPE, Profiles::TEMPTYPE_ICON, '', '');
 
